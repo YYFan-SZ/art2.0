@@ -1,10 +1,8 @@
-﻿export const runtime = 'edge';
+export const runtime = 'edge';
 import { NextResponse } from "next/server"
 import { aiClient } from "@/lib/ai"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
-
-export const runtime = "nodejs"
 
 function hslToHex(h: number, s: number, l: number) {
   s /= 100

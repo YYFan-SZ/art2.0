@@ -7,6 +7,7 @@ import type { Metadata } from 'next'
 const locales = ['en', 'zh']
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'edge'
 
 export function generateStaticParams() {
   return locales.map((l) => ({ locale: l }))
