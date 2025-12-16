@@ -1,3 +1,4 @@
+﻿export const runtime = 'edge';
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { users, emailVerificationTokens } from '@/lib/schema'
@@ -10,12 +11,12 @@ export async function GET(request: NextRequest) {
 
     if (!token) {
       return NextResponse.json(
-        { error: '验证令牌缺失' },
+        { error: '楠岃瘉浠ょ墝缂哄け' },
         { status: 400 }
       )
     }
 
-    // 查找验证令牌
+    // 鏌ユ壘楠岃瘉浠ょ墝
     const verificationToken = await db.query.emailVerificationTokens.findFirst({
       where: and(
         eq(emailVerificationTokens.token, token),
@@ -25,12 +26,12 @@ export async function GET(request: NextRequest) {
 
     if (!verificationToken) {
       return NextResponse.json(
-        { error: '验证令牌无效或已过期' },
+        { error: '楠岃瘉浠ょ墝鏃犳晥鎴栧凡杩囨湡' },
         { status: 400 }
       )
     }
 
-    // 更新用户邮箱验证状态
+    // 鏇存柊鐢ㄦ埛閭楠岃瘉鐘舵€?
     await db.update(users)
       .set({ 
         emailVerified: new Date(),
@@ -38,19 +39,19 @@ export async function GET(request: NextRequest) {
       })
       .where(eq(users.email, verificationToken.email))
 
-    // 删除验证令牌
+    // 鍒犻櫎楠岃瘉浠ょ墝
     await db.delete(emailVerificationTokens)
       .where(eq(emailVerificationTokens.token, token))
 
     return NextResponse.json({
-      message: '邮箱验证成功！您现在可以登录了。',
+      message: '閭楠岃瘉鎴愬姛锛佹偍鐜板湪鍙互鐧诲綍浜嗐€?,
       success: true
     })
 
   } catch (error) {
-    console.error('邮箱验证错误:', error)
+    console.error('閭楠岃瘉閿欒:', error)
     return NextResponse.json(
-      { error: '邮箱验证失败，请稍后重试' },
+      { error: '閭楠岃瘉澶辫触锛岃绋嶅悗閲嶈瘯' },
       { status: 500 }
     )
   }

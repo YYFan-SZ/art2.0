@@ -1,17 +1,18 @@
+﻿export const runtime = 'edge';
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { getUserPoints, addPoints, deductPoints, PointsAction } from '@/lib/points'
 import { isAdmin } from '@/lib/auth-utils'
 
-// 获取当前用户积分
+// 鑾峰彇褰撳墠鐢ㄦ埛绉垎
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
     
     if (!session?.user?.id) {
       return NextResponse.json(
-        { error: '未登录' },
+        { error: '鏈櫥褰? },
         { status: 401 }
       )
     }
@@ -24,22 +25,22 @@ export async function GET(request: NextRequest) {
       email: session.user.email,
     })
   } catch (error) {
-    console.error('获取积分失败:', error)
+    console.error('鑾峰彇绉垎澶辫触:', error)
     return NextResponse.json(
-      { error: '获取积分失败' },
+      { error: '鑾峰彇绉垎澶辫触' },
       { status: 500 }
     )
   }
 }
 
-// 管理员操作：添加或扣除积分
+// 绠＄悊鍛樻搷浣滐細娣诲姞鎴栨墸闄ょН鍒?
 export async function POST(request: NextRequest) {
   try {
-    // 验证管理员权限
+    // 楠岃瘉绠＄悊鍛樻潈闄?
     const adminAccess = await isAdmin()
     if (!adminAccess) {
       return NextResponse.json(
-        { error: '需要管理员权限' },
+        { error: '闇€瑕佺鐞嗗憳鏉冮檺' },
         { status: 403 }
       )
     }
@@ -48,7 +49,7 @@ export async function POST(request: NextRequest) {
     
     if (!userId || !points || !operation) {
       return NextResponse.json(
-        { error: '缺少必要参数' },
+        { error: '缂哄皯蹇呰鍙傛暟' },
         { status: 400 }
       )
     }
@@ -60,23 +61,24 @@ export async function POST(request: NextRequest) {
       result = await deductPoints(userId, points)
     } else {
       return NextResponse.json(
-        { error: '无效的操作类型' },
+        { error: '鏃犳晥鐨勬搷浣滅被鍨? },
         { status: 400 }
       )
     }
 
     return NextResponse.json({
-      message: `积分操作成功`,
+      message: `绉垎鎿嶄綔鎴愬姛`,
       newPoints: result,
       success: true
     })
   } catch (error) {
-    console.error('积分操作失败:', error)
+    console.error('绉垎鎿嶄綔澶辫触:', error)
     return NextResponse.json(
       { 
-        error: error instanceof Error ? error.message : '积分操作失败'
+        error: error instanceof Error ? error.message : '绉垎鎿嶄綔澶辫触'
       },
       { status: 500 }
     )
   }
 } 
+

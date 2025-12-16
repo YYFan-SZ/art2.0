@@ -1,3 +1,4 @@
+﻿export const runtime = 'edge';
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { newsletterSubscriptions } from '@/lib/schema'
@@ -10,16 +11,16 @@ export async function POST(request: NextRequest) {
   try {
     const { email, locale = 'zh' } = await request.json()
 
-    // 验证邮箱格式
+    // 楠岃瘉閭鏍煎紡
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!email || !emailRegex.test(email)) {
       return NextResponse.json(
-        { error: locale === 'zh' ? '请输入有效的邮箱地址' : 'Please enter a valid email address' },
+        { error: locale === 'zh' ? '璇疯緭鍏ユ湁鏁堢殑閭鍦板潃' : 'Please enter a valid email address' },
         { status: 400 }
       )
     }
 
-    // 检查是否已经订阅
+    // 妫€鏌ユ槸鍚﹀凡缁忚闃?
     const existingSubscription = await db
       .select()
       .from(newsletterSubscriptions)
@@ -29,14 +30,14 @@ export async function POST(request: NextRequest) {
     if (existingSubscription.length > 0) {
       const subscription = existingSubscription[0]
       
-      // 如果已经是活跃订阅
+      // 濡傛灉宸茬粡鏄椿璺冭闃?
       if (subscription.isActive) {
         return NextResponse.json(
-          { message: locale === 'zh' ? '您已经订阅了我们的邮件列表' : 'You are already subscribed to our newsletter' },
+          { message: locale === 'zh' ? '鎮ㄥ凡缁忚闃呬簡鎴戜滑鐨勯偖浠跺垪琛? : 'You are already subscribed to our newsletter' },
           { status: 200 }
         )
       } else {
-        // 重新激活订阅
+        // 閲嶆柊婵€娲昏闃?
         await db
           .update(newsletterSubscriptions)
           .set({
@@ -48,12 +49,12 @@ export async function POST(request: NextRequest) {
           .where(eq(newsletterSubscriptions.email, email))
 
         return NextResponse.json({
-          message: locale === 'zh' ? '欢迎回来！您已重新订阅成功' : 'Welcome back! You have successfully resubscribed'
+          message: locale === 'zh' ? '娆㈣繋鍥炴潵锛佹偍宸查噸鏂拌闃呮垚鍔? : 'Welcome back! You have successfully resubscribed'
         })
       }
     }
 
-    // 创建新订阅
+    // 鍒涘缓鏂拌闃?
     const subscriptionId = nanoid()
     const unsubscribeToken = crypto.randomBytes(32).toString('hex')
 
@@ -64,11 +65,11 @@ export async function POST(request: NextRequest) {
       unsubscribeToken: unsubscribeToken,
     })
 
-    // TODO: 这里可以发送欢迎邮件
+    // TODO: 杩欓噷鍙互鍙戦€佹杩庨偖浠?
     // await sendWelcomeEmail(email, locale, unsubscribeToken)
 
     return NextResponse.json({
-      message: locale === 'zh' ? '订阅成功！感谢您的关注' : 'Successfully subscribed! Thank you for your interest'
+      message: locale === 'zh' ? '璁㈤槄鎴愬姛锛佹劅璋㈡偍鐨勫叧娉? : 'Successfully subscribed! Thank you for your interest'
     })
 
   } catch (error) {
@@ -81,13 +82,13 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  // 获取订阅统计信息（仅用于管理）
+  // 鑾峰彇璁㈤槄缁熻淇℃伅锛堜粎鐢ㄤ簬绠＄悊锛?
   try {
-    // 验证管理员权限
+    // 楠岃瘉绠＄悊鍛樻潈闄?
     const adminAccess = await isAdmin()
     if (!adminAccess) {
       return NextResponse.json(
-        { error: '需要管理员权限' },
+        { error: '闇€瑕佺鐞嗗憳鏉冮檺' },
         { status: 403 }
       )
     }
@@ -135,3 +136,4 @@ export async function GET(request: NextRequest) {
     )
   }
 } 
+

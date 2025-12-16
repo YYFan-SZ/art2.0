@@ -1,3 +1,4 @@
+﻿export const runtime = 'edge';
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { users } from '@/lib/schema'
@@ -9,31 +10,31 @@ export async function POST(request: NextRequest) {
   try {
     const { email, locale } = await request.json()
 
-    // 从请求中获取语言信息，默认为英文
+    // 浠庤姹備腑鑾峰彇璇█淇℃伅锛岄粯璁や负鑻辨枃
     const language = locale || 'en'
 
     if (!email) {
       return NextResponse.json(
-        { error: language === 'en' ? 'Email is required' : '邮箱地址是必填项' },
+        { error: language === 'en' ? 'Email is required' : '閭鍦板潃鏄繀濉」' },
         { status: 400 }
       )
     }
 
-    // 查找用户
+    // 鏌ユ壘鐢ㄦ埛
     const user = await db.select().from(users).where(eq(users.email, email)).limit(1)
 
     if (user.length === 0) {
       return NextResponse.json(
-        { error: language === 'en' ? 'User not found' : '用户不存在' },
+        { error: language === 'en' ? 'User not found' : '鐢ㄦ埛涓嶅瓨鍦? },
         { status: 404 }
       )
     }
 
-    // 生成重置令牌
+    // 鐢熸垚閲嶇疆浠ょ墝
     const resetToken = crypto.randomBytes(32).toString('hex')
-    const resetTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000) // 24小时后过期
+    const resetTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000) // 24灏忔椂鍚庤繃鏈?
 
-    // 保存重置令牌到数据库
+    // 淇濆瓨閲嶇疆浠ょ墝鍒版暟鎹簱
     await db.update(users)
       .set({
         resetToken,
@@ -41,13 +42,13 @@ export async function POST(request: NextRequest) {
       })
       .where(eq(users.email, email))
 
-    // 发送重置密码邮件（根据语言）
+    // 鍙戦€侀噸缃瘑鐮侀偖浠讹紙鏍规嵁璇█锛?
     await sendPasswordResetEmail(email, resetToken, language as 'zh' | 'en')
 
     return NextResponse.json(
       { message: language === 'en' 
         ? 'Password reset email sent successfully' 
-        : '密码重置邮件已发送成功' },
+        : '瀵嗙爜閲嶇疆閭欢宸插彂閫佹垚鍔? },
       { status: 200 }
     )
   } catch (error) {

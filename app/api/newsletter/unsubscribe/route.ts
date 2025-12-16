@@ -1,3 +1,4 @@
+﻿export const runtime = 'edge';
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { newsletterSubscriptions } from '@/lib/schema'
@@ -9,7 +10,7 @@ export async function POST(request: NextRequest) {
 
     if (!email && !token) {
       return NextResponse.json(
-        { error: locale === 'zh' ? '请提供邮箱地址或取消订阅令牌' : 'Please provide email address or unsubscribe token' },
+        { error: locale === 'zh' ? '璇锋彁渚涢偖绠卞湴鍧€鎴栧彇娑堣闃呬护鐗? : 'Please provide email address or unsubscribe token' },
         { status: 400 }
       )
     }
@@ -21,7 +22,7 @@ export async function POST(request: NextRequest) {
       whereCondition = eq(newsletterSubscriptions.email, email)
     }
 
-    // 查找订阅记录
+    // 鏌ユ壘璁㈤槄璁板綍
     const existingSubscription = await db
       .select()
       .from(newsletterSubscriptions)
@@ -30,7 +31,7 @@ export async function POST(request: NextRequest) {
 
     if (existingSubscription.length === 0) {
       return NextResponse.json(
-        { error: locale === 'zh' ? '未找到订阅记录' : 'Subscription not found' },
+        { error: locale === 'zh' ? '鏈壘鍒拌闃呰褰? : 'Subscription not found' },
         { status: 404 }
       )
     }
@@ -39,12 +40,12 @@ export async function POST(request: NextRequest) {
 
     if (!subscription.isActive) {
       return NextResponse.json(
-        { message: locale === 'zh' ? '您已经取消了订阅' : 'You have already unsubscribed' },
+        { message: locale === 'zh' ? '鎮ㄥ凡缁忓彇娑堜簡璁㈤槄' : 'You have already unsubscribed' },
         { status: 200 }
       )
     }
 
-    // 取消订阅
+    // 鍙栨秷璁㈤槄
     await db
       .update(newsletterSubscriptions)
       .set({
@@ -54,7 +55,7 @@ export async function POST(request: NextRequest) {
       .where(whereCondition)
 
     return NextResponse.json({
-      message: locale === 'zh' ? '取消订阅成功' : 'Successfully unsubscribed'
+      message: locale === 'zh' ? '鍙栨秷璁㈤槄鎴愬姛' : 'Successfully unsubscribed'
     })
 
   } catch (error) {
@@ -66,7 +67,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET请求用于通过链接取消订阅
+// GET璇锋眰鐢ㄤ簬閫氳繃閾炬帴鍙栨秷璁㈤槄
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
@@ -75,12 +76,12 @@ export async function GET(request: NextRequest) {
 
     if (!token) {
       return NextResponse.json(
-        { error: locale === 'zh' ? '无效的取消订阅链接' : 'Invalid unsubscribe link' },
+        { error: locale === 'zh' ? '鏃犳晥鐨勫彇娑堣闃呴摼鎺? : 'Invalid unsubscribe link' },
         { status: 400 }
       )
     }
 
-    // 查找订阅记录
+    // 鏌ユ壘璁㈤槄璁板綍
     const existingSubscription = await db
       .select()
       .from(newsletterSubscriptions)
@@ -89,7 +90,7 @@ export async function GET(request: NextRequest) {
 
     if (existingSubscription.length === 0) {
       return NextResponse.json(
-        { error: locale === 'zh' ? '未找到订阅记录' : 'Subscription not found' },
+        { error: locale === 'zh' ? '鏈壘鍒拌闃呰褰? : 'Subscription not found' },
         { status: 404 }
       )
     }
@@ -98,12 +99,12 @@ export async function GET(request: NextRequest) {
 
     if (!subscription.isActive) {
       return NextResponse.json(
-        { message: locale === 'zh' ? '您已经取消了订阅' : 'You have already unsubscribed' },
+        { message: locale === 'zh' ? '鎮ㄥ凡缁忓彇娑堜簡璁㈤槄' : 'You have already unsubscribed' },
         { status: 200 }
       )
     }
 
-    // 取消订阅
+    // 鍙栨秷璁㈤槄
     await db
       .update(newsletterSubscriptions)
       .set({
@@ -113,7 +114,7 @@ export async function GET(request: NextRequest) {
       .where(eq(newsletterSubscriptions.unsubscribeToken, token))
 
     return NextResponse.json({
-      message: locale === 'zh' ? '取消订阅成功' : 'Successfully unsubscribed'
+      message: locale === 'zh' ? '鍙栨秷璁㈤槄鎴愬姛' : 'Successfully unsubscribed'
     })
 
   } catch (error) {
@@ -124,3 +125,4 @@ export async function GET(request: NextRequest) {
     )
   }
 } 
+

@@ -1,6 +1,6 @@
+﻿export const runtime = 'edge';
 import { NextRequest, NextResponse } from 'next/server'
-// 使用 Creem 作为支付提供商
-import { getServerSession } from 'next-auth'
+// 浣跨敤 Creem 浣滀负鏀粯鎻愪緵鍟?import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
@@ -24,8 +24,7 @@ export async function POST(request: NextRequest) {
     const successUrl = `${process.env.NEXT_PUBLIC_APP_URL}/profile?payment=success`
     const cancelUrl = `${process.env.NEXT_PUBLIC_APP_URL}/profile?payment=cancelled`
 
-    // 如果提供了 Creem 产品ID，直接创建 Checkout；否则根据金额创建一次性订单
-    const body: any = {
+    // 濡傛灉鎻愪緵浜?Creem 浜у搧ID锛岀洿鎺ュ垱寤?Checkout锛涘惁鍒欐牴鎹噾棰濆垱寤轰竴娆℃€ц鍗?    const body: any = {
       units: 1,
       customer: {
         email: session.user.email,
@@ -75,3 +74,4 @@ export async function POST(request: NextRequest) {
     )
   }
 }
+

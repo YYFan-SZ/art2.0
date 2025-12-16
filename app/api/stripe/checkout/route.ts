@@ -1,3 +1,4 @@
+﻿export const runtime = 'edge';
 import { NextRequest, NextResponse } from 'next/server'
 import { getActualPriceIds } from '@/lib/stripe'
 import { getServerSession } from 'next-auth'
@@ -17,25 +18,25 @@ export async function POST(request: NextRequest) {
 
     const { priceId, planType, locale = 'en' } = await request.json()
 
-    // 获取实际的价格ID
+    // 鑾峰彇瀹為檯鐨勪环鏍糏D
     const actualPriceIds = getActualPriceIds()
 
-    // 添加调试日志
+    // 娣诲姞璋冭瘯鏃ュ織
     console.log('=== Creem Checkout Debug ===')
-    console.log('收到的价格ID:', priceId)
-    console.log('计划类型:', planType)
-    console.log('语言:', locale)
-    console.log('实际的价格ID配置:', actualPriceIds)
+    console.log('鏀跺埌鐨勪环鏍糏D:', priceId)
+    console.log('璁″垝绫诲瀷:', planType)
+    console.log('璇█:', locale)
+    console.log('瀹為檯鐨勪环鏍糏D閰嶇疆:', actualPriceIds)
 
-    // 企业版不支持在线支付
+    // 浼佷笟鐗堜笉鏀寔鍦ㄧ嚎鏀粯
     if (planType === 'enterprise') {
       return NextResponse.json({ error: 'Enterprise plan requires contact sales' }, { status: 400 })
     }
 
-    // 确定要使用的价格ID
+    // 纭畾瑕佷娇鐢ㄧ殑浠锋牸ID
     let finalPriceId = priceId
     
-    // 如果前端传递的价格ID为空或无效，使用服务端的配置
+    // 濡傛灉鍓嶇浼犻€掔殑浠锋牸ID涓虹┖鎴栨棤鏁堬紝浣跨敤鏈嶅姟绔殑閰嶇疆
     if (!priceId || priceId.trim() === '') {
       if (planType === 'pro') {
         finalPriceId = actualPriceIds.pro
@@ -44,18 +45,18 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 验证最终的价格ID
+    // 楠岃瘉鏈€缁堢殑浠锋牸ID
     if (!finalPriceId || finalPriceId.trim() === '') {
-      console.error('价格ID验证失败!')
-      console.error('计划类型:', planType)
-      console.error('最终价格ID:', finalPriceId)
-      console.error('可用的价格ID:', actualPriceIds)
+      console.error('浠锋牸ID楠岃瘉澶辫触!')
+      console.error('璁″垝绫诲瀷:', planType)
+      console.error('鏈€缁堜环鏍糏D:', finalPriceId)
+      console.error('鍙敤鐨勪环鏍糏D:', actualPriceIds)
       return NextResponse.json({ error: 'Price ID not configured for this plan' }, { status: 400 })
     }
 
-    console.log('使用的最终价格ID:', finalPriceId)
+    console.log('浣跨敤鐨勬渶缁堜环鏍糏D:', finalPriceId)
 
-    // 验证locale并构建成功URL
+    // 楠岃瘉locale骞舵瀯寤烘垚鍔烾RL
     const validLocales = ['en', 'zh']
     const validLocale = validLocales.includes(locale) ? locale : 'en'
     const successUrl = `${process.env.NEXT_PUBLIC_APP_URL}/${validLocale}/dashboard`
@@ -101,3 +102,4 @@ export async function POST(request: NextRequest) {
     )
   }
 }
+

@@ -1,3 +1,4 @@
+﻿export const runtime = 'edge';
 import { NextResponse } from "next/server"
 import { aiClient } from "@/lib/ai"
 import { getServerSession } from "next-auth"
@@ -43,18 +44,18 @@ export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions)
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "未登录" }, { status: 401 })
+      return NextResponse.json({ error: "鏈櫥褰? }, { status: 401 })
     }
     const body = await req.json()
-    const keyword: string = (body?.keyword || "莫奈").toString().slice(0, 50)
+    const keyword: string = (body?.keyword || "鑾").toString().slice(0, 50)
     const locale: string = (body?.locale || "zh").toString()
 
     const systemPrompt = locale === "zh"
-      ? "你是艺术配色专家。根据输入关键词，仅返回JSON（不要包含说明文字）。JSON结构为：{\"title\": string, \"colors\": [{\"hex\": string, \"name\": string, \"description\": string}...5项], \"gradients\": [{\"stops\": [string,string,(string)], \"name\": string, \"description\": string}...3-4项]}。要求：\n1) 纯色5项分别对应主色/辅助/点缀/背景/文字；\n2) 渐变为2-3色线性渐变，方向左上到右下，现代UI审美；\n3) 所有颜色均为HEX大写；\n4) 名称与简介贴合关键词的艺术语境；\n5) 严格输出合法JSON。"
+      ? "浣犳槸鑹烘湳閰嶈壊涓撳銆傛牴鎹緭鍏ュ叧閿瘝锛屼粎杩斿洖JSON锛堜笉瑕佸寘鍚鏄庢枃瀛楋級銆侸SON缁撴瀯涓猴細{\"title\": string, \"colors\": [{\"hex\": string, \"name\": string, \"description\": string}...5椤筣, \"gradients\": [{\"stops\": [string,string,(string)], \"name\": string, \"description\": string}...3-4椤筣}銆傝姹傦細\n1) 绾壊5椤瑰垎鍒搴斾富鑹?杈呭姪/鐐圭紑/鑳屾櫙/鏂囧瓧锛沑n2) 娓愬彉涓?-3鑹茬嚎鎬ф笎鍙橈紝鏂瑰悜宸︿笂鍒板彸涓嬶紝鐜颁唬UI瀹＄編锛沑n3) 鎵€鏈夐鑹插潎涓篐EX澶у啓锛沑n4) 鍚嶇О涓庣畝浠嬭创鍚堝叧閿瘝鐨勮壓鏈澧冿紱\n5) 涓ユ牸杈撳嚭鍚堟硶JSON銆?
       : "You are a color expert. Return ONLY JSON (no prose): {\"title\": string, \"colors\": [{\"hex\": string, \"name\": string, \"description\": string}...5], \"gradients\": [{\"stops\": [string,string,(string)], \"name\": string, \"description\": string}...3-4]}. Requirements: 5 solid colors (primary/secondary/accent/background/text), 2-3 stop linear gradients (top-left to bottom-right) with modern UI aesthetics, HEX uppercase, names and descriptions contextual to the keyword, valid JSON only."
 
     const userPrompt = locale === "zh"
-      ? `关键词：${keyword}。请生成高辨识度方案，兼顾艺术史与现代设计。`
+      ? `鍏抽敭璇嶏細${keyword}銆傝鐢熸垚楂樿鲸璇嗗害鏂规锛屽吋椤捐壓鏈彶涓庣幇浠ｈ璁°€俙
       : `Keyword: ${keyword}. Generate a high-recognition palette blending art history and modern design.`
 
     let errorDetail: string | null = null
@@ -122,13 +123,13 @@ export async function POST(req: Request) {
       const fb = generateSeededPalette(keyword)
       const colors = fb.pure.slice(0, 5).map((hex, i) => ({
         hex,
-        name: (locale === "zh" ? "色块" : "Swatch") + ` ${i + 1}`,
-        description: locale === "zh" ? `来自“${keyword}”的配色` : `Palette from "${keyword}"`,
+        name: (locale === "zh" ? "鑹插潡" : "Swatch") + ` ${i + 1}`,
+        description: locale === "zh" ? `鏉ヨ嚜鈥?{keyword}鈥濈殑閰嶈壊` : `Palette from "${keyword}"`,
       }))
       const gradients = fb.gradients.slice(0, 4).map((stops, i) => ({
         stops,
-        name: (locale === "zh" ? "渐变" : "Gradient") + ` ${i + 1}`,
-        description: locale === "zh" ? `来自“${keyword}”的渐变组` : `Gradient set from "${keyword}"`,
+        name: (locale === "zh" ? "娓愬彉" : "Gradient") + ` ${i + 1}`,
+        description: locale === "zh" ? `鏉ヨ嚜鈥?{keyword}鈥濈殑娓愬彉缁刞 : `Gradient set from "${keyword}"`,
       }))
       return NextResponse.json({ title: keyword, colors, gradients, meta: { fallback: true, source: "fallback", error: "invalid_response", detail: errorDetail, baseURL: process.env.AI_BASE_URL || "https://api.deepseek.com", model } })
     }
@@ -138,8 +139,8 @@ export async function POST(req: Request) {
       .slice(0, 5)
       .map((c, i) => {
         const hex = String(c.hex || "#000000").toUpperCase()
-        let name = String(c.name || (locale === "zh" ? "色块" : "Swatch"))
-        let description = String(c.description || (locale === "zh" ? `来自“${keyword}”的配色` : `Palette from "${keyword}"`))
+        let name = String(c.name || (locale === "zh" ? "鑹插潡" : "Swatch"))
+        let description = String(c.description || (locale === "zh" ? `鏉ヨ嚜鈥?{keyword}鈥濈殑閰嶈壊` : `Palette from "${keyword}"`))
         if (locale === "en" && (isCn(name) || isCn(description))) {
           name = `Swatch ${i + 1}`
           description = `Palette from "${keyword}"`
@@ -151,8 +152,8 @@ export async function POST(req: Request) {
       .slice(0, 4)
       .map((g, i) => {
         const stops = Array.isArray(g.stops) ? g.stops.map((s: any) => String(s).toUpperCase()) : []
-        let name = String(g.name || (locale === "zh" ? "渐变" : "Gradient"))
-        let description = String(g.description || (locale === "zh" ? `来自“${keyword}”的渐变组` : `Gradient set from "${keyword}"`))
+        let name = String(g.name || (locale === "zh" ? "娓愬彉" : "Gradient"))
+        let description = String(g.description || (locale === "zh" ? `鏉ヨ嚜鈥?{keyword}鈥濈殑娓愬彉缁刞 : `Gradient set from "${keyword}"`))
         if (locale === "en" && (isCn(name) || isCn(description))) {
           name = `Gradient ${i + 1}`
           description = `Gradient set from "${keyword}"`
@@ -170,3 +171,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ title: "Palette", colors, gradients, meta: { fallback: true, source: "fallback", error: reason, detail: String(e?.message || e), baseURL: process.env.AI_BASE_URL || "https://api.deepseek.com", model: process.env.AI_MODEL || "deepseek-chat" } })
   }
 }
+

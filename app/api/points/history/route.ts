@@ -1,3 +1,4 @@
+﻿export const runtime = 'edge';
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
@@ -9,7 +10,7 @@ export async function GET(request: NextRequest) {
     
     if (!session?.user?.id) {
       return NextResponse.json(
-        { error: '未登录' },
+        { error: '鏈櫥褰? },
         { status: 401 }
       )
     }
@@ -19,13 +20,13 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '5')
     const offset = (page - 1) * limit
 
-    // 获取分页历史记录
+    // 鑾峰彇鍒嗛〉鍘嗗彶璁板綍
     const history = await getUserPointsHistory(session.user.id, limit, offset)
     
-    // 获取总记录数
+    // 鑾峰彇鎬昏褰曟暟
     const total = await getUserPointsHistoryCount(session.user.id)
     
-    // 计算总页数
+    // 璁＄畻鎬婚〉鏁?
     const totalPages = Math.ceil(total / limit)
     
     return NextResponse.json({
@@ -41,10 +42,11 @@ export async function GET(request: NextRequest) {
       }
     })
   } catch (error) {
-    console.error('获取积分历史失败:', error)
+    console.error('鑾峰彇绉垎鍘嗗彶澶辫触:', error)
     return NextResponse.json(
-      { error: '获取积分历史失败' },
+      { error: '鑾峰彇绉垎鍘嗗彶澶辫触' },
       { status: 500 }
     )
   }
 } 
+

@@ -1,3 +1,4 @@
+﻿export const runtime = 'edge';
 import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
@@ -8,17 +9,18 @@ export async function GET() {
     const session = await getServerSession(authOptions)
     
     if (!session?.user?.id) {
-      return NextResponse.json({ error: '未授权' }, { status: 401 })
+      return NextResponse.json({ error: '鏈巿鏉? }, { status: 401 })
     }
 
     const pointsDetail = await getUserPointsDetail(session.user.id)
     
     return NextResponse.json(pointsDetail)
   } catch (error) {
-    console.error('获取用户积分详情失败:', error)
+    console.error('鑾峰彇鐢ㄦ埛绉垎璇︽儏澶辫触:', error)
     return NextResponse.json(
-      { error: '获取积分详情失败' },
+      { error: '鑾峰彇绉垎璇︽儏澶辫触' },
       { status: 500 }
     )
   }
 } 
+

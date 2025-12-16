@@ -1,3 +1,4 @@
+﻿export const runtime = 'edge';
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { users } from '@/lib/schema'
@@ -22,7 +23,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 查找具有有效重置令牌的用户
+    // 鏌ユ壘鍏锋湁鏈夋晥閲嶇疆浠ょ墝鐨勭敤鎴?
     const user = await db.select().from(users).where(
       and(
         eq(users.resetToken, token),
@@ -37,10 +38,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 哈希新密码
+    // 鍝堝笇鏂板瘑鐮?
     const hashedPassword = await bcrypt.hash(password, 12)
 
-    // 更新用户密码并清除重置令牌
+    // 鏇存柊鐢ㄦ埛瀵嗙爜骞舵竻闄ら噸缃护鐗?
     await db.update(users)
       .set({
         password: hashedPassword,

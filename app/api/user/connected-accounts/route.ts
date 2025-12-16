@@ -1,3 +1,4 @@
+﻿export const runtime = 'edge';
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
@@ -9,12 +10,12 @@ export async function GET(request: NextRequest) {
     
     if (!session?.user?.id) {
       return NextResponse.json(
-        { error: '未授权访问' },
+        { error: '鏈巿鏉冭闂? },
         { status: 401 }
       )
     }
 
-    // 获取用户的关联账户信息
+    // 鑾峰彇鐢ㄦ埛鐨勫叧鑱旇处鎴蜂俊鎭?
     const accounts = await db.query.accounts.findMany({
       where: (accounts, { eq }) => eq(accounts.userId, session.user.id),
     })
@@ -31,10 +32,11 @@ export async function GET(request: NextRequest) {
       accounts: connectedAccounts,
     })
   } catch (error) {
-    console.error('获取关联账户失败:', error)
+    console.error('鑾峰彇鍏宠仈璐︽埛澶辫触:', error)
     return NextResponse.json(
-      { error: '服务器错误' },
+      { error: '鏈嶅姟鍣ㄩ敊璇? },
       { status: 500 }
     )
   }
 } 
+

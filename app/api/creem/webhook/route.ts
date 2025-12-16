@@ -1,3 +1,4 @@
+﻿export const runtime = 'edge';
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { users, pointsHistory } from '@/lib/schema'
@@ -50,7 +51,7 @@ export async function POST(request: NextRequest) {
         points: giftedPoints,
         pointsType: 'gifted',
         action: 'subscription_purchase',
-        description: `订阅充值赠送 ${giftedPoints} 积分`,
+        description: `璁㈤槄鍏呭€艰禒閫?${giftedPoints} 绉垎`,
         createdAt: new Date(),
       })
     }
@@ -71,7 +72,7 @@ export async function POST(request: NextRequest) {
         points: purchasedPoints,
         pointsType: 'purchased',
         action: 'points_purchase',
-        description: `购买积分 ${purchasedPoints} 积分`,
+        description: `璐拱绉垎 ${purchasedPoints} 绉垎`,
         createdAt: new Date(),
       })
     }
@@ -82,3 +83,4 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
+

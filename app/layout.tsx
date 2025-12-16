@@ -5,6 +5,7 @@ import { Analytics } from "@/components/seo/analytics"
 import './globals.css'
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'edge'
 
 
 export default function RootLayout({

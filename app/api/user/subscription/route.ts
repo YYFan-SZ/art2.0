@@ -1,3 +1,4 @@
+﻿export const runtime = 'edge';
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
@@ -12,12 +13,12 @@ export async function GET(request: NextRequest) {
     
     if (!session?.user?.id) {
       return NextResponse.json(
-        { error: '未授权访问' },
+        { error: '鏈巿鏉冭闂? },
         { status: 401 }
       )
     }
 
-    // 获取用户完整信息（包括积分信息）
+    // 鑾峰彇鐢ㄦ埛瀹屾暣淇℃伅锛堝寘鎷Н鍒嗕俊鎭級
     const user = await db.query.users.findFirst({
       where: eq(users.id, session.user.id),
       columns: {
@@ -34,26 +35,26 @@ export async function GET(request: NextRequest) {
 
     if (!user) {
       return NextResponse.json(
-        { error: '用户不存在' },
+        { error: '鐢ㄦ埛涓嶅瓨鍦? },
         { status: 404 }
       )
     }
 
-    // 检查订阅是否已到期
+    // 妫€鏌ヨ闃呮槸鍚﹀凡鍒版湡
     const now = new Date()
     const isExpired = user.subscriptionCurrentPeriodEnd && user.subscriptionCurrentPeriodEnd < now
     const hasActiveSubscription = user.subscriptionStatus === 'active' && !isExpired
 
-    // 如果订阅已到期但状态仍为active，需要更新状态并清零赠送积分
+    // 濡傛灉璁㈤槄宸插埌鏈熶絾鐘舵€佷粛涓篴ctive锛岄渶瑕佹洿鏂扮姸鎬佸苟娓呴浂璧犻€佺Н鍒?
     if (isExpired && user.subscriptionStatus === 'active' && (user.giftedPoints || 0) > 0) {
-      console.log('检测到订阅已到期，清零赠送积分:', {
+      console.log('妫€娴嬪埌璁㈤槄宸插埌鏈燂紝娓呴浂璧犻€佺Н鍒?', {
         userId: user.id,
-        到期时间: user.subscriptionCurrentPeriodEnd,
-        当前时间: now,
-        当前赠送积分: user.giftedPoints
+        鍒版湡鏃堕棿: user.subscriptionCurrentPeriodEnd,
+        褰撳墠鏃堕棿: now,
+        褰撳墠璧犻€佺Н鍒? user.giftedPoints
       })
 
-      // 清零赠送积分并更新订阅状态
+      // 娓呴浂璧犻€佺Н鍒嗗苟鏇存柊璁㈤槄鐘舵€?
       await db
         .update(users)
         .set({
@@ -65,20 +66,20 @@ export async function GET(request: NextRequest) {
         })
         .where(eq(users.id, user.id))
 
-      // 记录积分清零历史
+      // 璁板綍绉垎娓呴浂鍘嗗彶
       await db.insert(pointsHistory).values({
         id: uuidv4(),
         userId: user.id,
         points: -(user.giftedPoints || 0),
         pointsType: 'gifted',
         action: 'subscription_expired',
-        description: `订阅到期自动清零赠送积分`,
+        description: `璁㈤槄鍒版湡鑷姩娓呴浂璧犻€佺Н鍒哷,
         createdAt: new Date(),
       })
 
-      console.log(`订阅到期处理完成: 用户 ${user.id}，清零 ${user.giftedPoints || 0} 赠送积分`)
+      console.log(`璁㈤槄鍒版湡澶勭悊瀹屾垚: 鐢ㄦ埛 ${user.id}锛屾竻闆?${user.giftedPoints || 0} 璧犻€佺Н鍒哷)
 
-      // 返回更新后的状态
+      // 杩斿洖鏇存柊鍚庣殑鐘舵€?
       return NextResponse.json({
         subscriptionStatus: 'expired',
         subscriptionPlan: null,
@@ -87,7 +88,7 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    // 如果订阅已到期但没有赠送积分需要清零，只更新状态
+    // 濡傛灉璁㈤槄宸插埌鏈熶絾娌℃湁璧犻€佺Н鍒嗛渶瑕佹竻闆讹紝鍙洿鏂扮姸鎬?
     if (isExpired && user.subscriptionStatus === 'active') {
       await db
         .update(users)
@@ -98,7 +99,7 @@ export async function GET(request: NextRequest) {
         })
         .where(eq(users.id, user.id))
 
-      console.log(`订阅到期状态更新: 用户 ${user.id}，无赠送积分需要清零`)
+      console.log(`璁㈤槄鍒版湡鐘舵€佹洿鏂? 鐢ㄦ埛 ${user.id}锛屾棤璧犻€佺Н鍒嗛渶瑕佹竻闆禶)
 
       return NextResponse.json({
         subscriptionStatus: 'expired',
@@ -108,7 +109,7 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    // 返回当前状态
+    // 杩斿洖褰撳墠鐘舵€?
     return NextResponse.json({
       subscriptionStatus: user.subscriptionStatus,
       subscriptionPlan: user.subscriptionPlan,
@@ -116,10 +117,11 @@ export async function GET(request: NextRequest) {
       stripeCustomerId: user.stripeCustomerId,
     })
   } catch (error) {
-    console.error('获取订阅信息失败:', error)
+    console.error('鑾峰彇璁㈤槄淇℃伅澶辫触:', error)
     return NextResponse.json(
-      { error: '服务器错误' },
+      { error: '鏈嶅姟鍣ㄩ敊璇? },
       { status: 500 }
     )
   }
 } 
+
