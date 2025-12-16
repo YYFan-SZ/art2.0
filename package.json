@@ -1,12 +1,13 @@
 {
-  "name": "get-saas",
-  "version": "1.0.0",
+  "name": "artpalette-ai",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
     "dev": "next dev",
-    "lint": "next lint",
+    "build": "next build",
     "start": "next start",
+    "lint": "next lint",
+    "pages:build": "pnpm install --no-frozen-lockfile && npx @cloudflare/next-on-pages@1",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
