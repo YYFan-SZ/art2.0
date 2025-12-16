@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { stripe } from '@/lib/stripe'
+// 使用 Creem 作为支付提供商
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
   try {
-    // 检查Stripe是否已配置
-    if (!stripe) {
-      return NextResponse.json({ error: 'Stripe not configured' }, { status: 500 })
+    if (!process.env.CREEM_API_KEY) {
+      return NextResponse.json({ error: 'Creem not configured' }, { status: 500 })
     }
 
     const session = await getServerSession(authOptions)
@@ -22,70 +21,57 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    // 创建或获取客户
-    let customer
-    const existingCustomers = await stripe.customers.list({
-      email: session.user.email,
-      limit: 1,
-    })
+    const successUrl = `${process.env.NEXT_PUBLIC_APP_URL}/profile?payment=success`
+    const cancelUrl = `${process.env.NEXT_PUBLIC_APP_URL}/profile?payment=cancelled`
 
-    if (existingCustomers.data.length > 0) {
-      customer = existingCustomers.data[0]
-    } else {
-      customer = await stripe.customers.create({
+    // 如果提供了 Creem 产品ID，直接创建 Checkout；否则根据金额创建一次性订单
+    const body: any = {
+      units: 1,
+      customer: {
         email: session.user.email,
-        name: session.user.name || undefined,
-      })
-    }
-
-    // 创建line items - 优先使用价格ID
-    let lineItems
-    if (priceId && priceId.trim() !== '') {
-      // 使用预定义的价格ID
-      lineItems = [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ]
-    } else {
-      // 使用动态价格创建（向后兼容）
-      lineItems = [
-        {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: `${points.toLocaleString()} Points`,
-              description: `Purchase ${points.toLocaleString()} points for your account`,
-            },
-            unit_amount: amount, // 金额已经是分为单位
-          },
-          quantity: 1,
-        },
-      ]
-    }
-
-    // 创建结账会话
-    const checkoutSession = await stripe.checkout.sessions.create({
-      customer: customer.id,
-      payment_method_types: ['card'],
-      line_items: lineItems,
-      mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/profile?payment=success&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/profile?payment=cancelled`,
+      },
+      success_url: successUrl,
       metadata: {
         userId: session.user.id || '',
         points: points.toString(),
         type: 'points_purchase',
+        amount,
       },
+    }
+
+    if (priceId && priceId.trim() !== '') {
+      body.product_id = priceId
+    } else {
+      body.amount = amount
+      body.currency = 'USD'
+      body.product = `${points.toLocaleString()} Points`
+    }
+
+    const creemResponse = await fetch('https://api.creem.io/v1/checkouts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.CREEM_API_KEY!,
+      },
+      body: JSON.stringify(body),
     })
 
-    return NextResponse.json({ url: checkoutSession.url })
+    if (!creemResponse.ok) {
+      const errText = await creemResponse.text()
+      console.error('Creem checkout session creation error:', errText)
+      return NextResponse.json(
+        { error: 'Failed to create checkout session' },
+        { status: 500 }
+      )
+    }
+
+    const checkout = await creemResponse.json()
+    return NextResponse.json({ url: checkout.checkout_url })
   } catch (error) {
-    console.error('Stripe checkout session creation error:', error)
+    console.error('Creem checkout session creation error:', error)
     return NextResponse.json(
       { error: 'Failed to create checkout session' },
       { status: 500 }
     )
   }
-} 
+}

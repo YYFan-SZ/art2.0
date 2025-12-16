@@ -4,6 +4,8 @@ import { AuthSessionProvider } from "@/components/providers/session-provider"
 import { Analytics } from "@/components/seo/analytics"
 import './globals.css'
 
+export const dynamic = 'force-dynamic'
+
 
 export default function RootLayout({
   children,
@@ -16,8 +18,8 @@ export default function RootLayout({
         <Analytics />
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <AuthSessionProvider>

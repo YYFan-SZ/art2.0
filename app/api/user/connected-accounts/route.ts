@@ -21,10 +21,6 @@ export async function GET(request: NextRequest) {
 
     const connectedAccounts = [
       {
-        provider: 'github',
-        connected: accounts.some(acc => acc.provider === 'github'),
-      },
-      {
         provider: 'google',
         connected: accounts.some(acc => acc.provider === 'google'),
       },

@@ -18,13 +18,13 @@ export function SaasWebsiteExamplesContent() {
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               <span className="text-primary">
-                {isZh ? 'Get SaaS可以做哪些网站？' : 'What Websites Can Get SaaS Build?'}
+                {isZh ? 'AIArtPalette可以做哪些网站？' : 'What Websites Can AIArtPalette Build?'}
               </span>
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
               {isZh
-                ? '深入了解Get SaaS模版的应用场景，从电商平台到企业管理系统，再到在线教育平台的完整解决方案'
-                : 'Understand Get SaaS template application scenarios, from e-commerce platforms to enterprise management systems, to online education platforms'
+                ? '深入了解AIArtPalette模版的应用场景，从电商平台到企业管理系统，再到在线教育平台的完整解决方案'
+                : 'Understand AIArtPalette template application scenarios, from e-commerce platforms to enterprise management systems, to online education platforms'
               }
             </p>
           </div>
@@ -42,8 +42,8 @@ export function SaasWebsiteExamplesContent() {
 
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                 {isZh
-                  ? 'Get SaaS为构建现代化电商平台提供了完整的基础设施。从用户注册、产品展示到支付处理，所有核心功能都已集成。'
-                  : 'Get SaaS delivers a comprehensive infrastructure foundation for building sophisticated e-commerce platforms. From seamless user registration and dynamic product catalogs to secure payment processing and order management, all essential e-commerce functionalities are pre-integrated and production-ready.'
+                  ? 'AIArtPalette为构建现代化电商平台提供了完整的基础设施。从用户注册、产品展示到支付处理，所有核心功能都已集成。'
+                  : 'AIArtPalette delivers a comprehensive infrastructure foundation for building modern e-commerce platforms. From user registration and product catalogs to secure payment processing and order management, all core features are integrated.'
                 }
               </p>
 
@@ -240,7 +240,7 @@ export function SaasWebsiteExamplesContent() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a
-                    href={`/${locale}/#pricing`}
+                    href={`/${locale}/pricing`}
                     className="inline-flex items-center px-6 py-3 bg-background text-primary font-semibold rounded-lg hover:bg-secondary transition-colors"
                   >
                     {isZh ? '立即开始' : 'Get Started'}

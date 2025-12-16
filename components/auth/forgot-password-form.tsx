@@ -83,13 +83,13 @@ export function ForgotPasswordForm() {
           <div className="mx-auto w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center shadow-lg border border-primary/30">
             <Image
               src="/logo.png"
-              alt="Get SaaS"
+              alt="AIArtPalette"
               width={48}
               height={48}
               className="object-contain"
             />
           </div>
-          <CardTitle className="text-2xl font-bold text-primary">
+          <CardTitle className="text-2xl font-bold text-foreground">
             {t('title')}
           </CardTitle>
           <CardDescription className="text-muted-foreground">
@@ -100,17 +100,18 @@ export function ForgotPasswordForm() {
         <CardContent className="space-y-6">
           {status === 'success' ? (
             <div className="text-center space-y-4">
-              <Alert className="border-primary/30 bg-primary/20">
-                <CheckCircle className="h-4 w-4 text-primary" />
-                <AlertDescription className="text-primary/80">
+              <Alert className="border-black/30 bg-black/10">
+                <CheckCircle className="h-4 w-4 text-black" />
+                <AlertDescription className="text-black">
                   {message}
                 </AlertDescription>
               </Alert>
               <p className="text-muted-foreground text-sm">
                 {t('check_email')}
               </p>
-              <Button asChild variant="outline" className="w-full border-primary/30 bg-secondary/50 text-foreground hover:bg-primary/20 hover:text-primary">
-                <Link href={getLocalizedPath("/auth/signin")}>
+              <Button asChild variant="default" className="w-full">
+                <Link href={getLocalizedPath("/auth/signin")}
+                >
                   <ArrowLeft className="mr-2 h-4 w-4" />
                   {t('back_to_login')}
                 </Link>
@@ -142,7 +143,7 @@ export function ForgotPasswordForm() {
 
               <Button
                 type="submit"
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 cyber-glow"
+                className="w-full"
                 disabled={isLoading}
               >
                 {isLoading ? t('sending') : t('send_reset_link')}
@@ -151,7 +152,7 @@ export function ForgotPasswordForm() {
               <div className="text-center">
                 <Link
                   href={getLocalizedPath("/auth/signin")}
-                  className="text-muted-foreground hover:text-primary text-sm font-medium inline-flex items-center"
+                  className="text-muted-foreground hover:text-black text-sm font-medium inline-flex items-center"
                 >
                   <ArrowLeft className="mr-1 h-4 w-4" />
                   {t('back_to_login')}

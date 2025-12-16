@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { signIn } from 'next-auth/react'
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Loader2 } from 'lucide-react'
-import { SiGithub, SiGoogle } from 'react-icons/si'
+import { SiGoogle } from 'react-icons/si'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Separator } from '@/components/ui/separator'
@@ -26,6 +26,7 @@ export function SignInForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [oauthLoading, setOauthLoading] = useState<string | null>(null)
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   // 根据语言环境构建正确的路径
   const getLocalizedPath = (path: string) => {
@@ -40,6 +41,24 @@ export function SignInForm() {
     }
     return getLocalizedPath('/')
   }
+
+  const [signupHref, setSignupHref] = useState(getLocalizedPath('/auth/signup'))
+
+  useEffect(() => {
+    const cb = getCallbackUrl()
+    setSignupHref(
+      cb
+        ? `${getLocalizedPath('/auth/signup')}?callbackUrl=${encodeURIComponent(cb)}`
+        : getLocalizedPath('/auth/signup')
+    )
+  }, [pathname, locale])
+
+  useEffect(() => {
+    const err = searchParams.get('error')
+    if (err) {
+      setError(t(`errors.${err}`))
+    }
+  }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -81,60 +100,46 @@ export function SignInForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md shadow-2xl border-0 bg-secondary/80 backdrop-blur-sm cyber-glow-subtle">
-        <CardHeader className="text-center space-y-4">
-          <div className="mx-auto w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center shadow-lg border border-primary/30">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+      <Card className="w-full max-w-md shadow-xl border-0 bg-white rounded-2xl">
+        <CardHeader className="text-center space-y-4 pt-8">
+          <div className="mx-auto w-16 h-16 bg-black rounded-2xl flex items-center justify-center shadow-lg">
             <Image
               src="/logo.png"
               alt="Get SaaS"
-              width={48}
-              height={48}
-              className="object-contain"
+              width={40}
+              height={40}
+              className="object-contain invert brightness-0 saturate-100 invert-0"
+              style={{ filter: "invert(1)" }}
             />
           </div>
-          <CardTitle className="text-2xl font-bold text-primary">
+          <CardTitle className="text-2xl font-bold text-black">
             {t('welcome_back')}
           </CardTitle>
-          <CardDescription className="text-muted-foreground">
+          <CardDescription className="text-gray-500">
             {t('login_description')}
           </CardDescription>
         </CardHeader>
         
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 pb-8">
           {error && (
-            <Alert className="border-red-500/30 bg-red-500/20">
-              <AlertDescription className="text-red-300">{error}</AlertDescription>
+            <Alert className="border-red-500/30 bg-red-50">
+              <AlertDescription className="text-red-600">{error}</AlertDescription>
             </Alert>
           )}
 
-          {/* 第三方登录按钮 */}
+          {/* 第三方登录按钮（移除 GitHub，仅保留 Google） */}
           <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 gap-2">
               <Button
                 type="button"
                 variant="outline"
-                className="w-full flex items-center justify-center space-x-2 border-primary/30 bg-secondary/50 text-foreground hover:bg-primary/20 hover:text-primary"
-                onClick={() => handleOAuthSignIn('github')}
-                disabled={oauthLoading !== null}
-              >
-                {oauthLoading === 'github' ? (
-                  <Loader2 className="h-4 w-4 animate-spin text-primary" />
-                ) : (
-                  <SiGithub className="h-4 w-4" />
-                )}
-                <span>GitHub</span>
-              </Button>
-
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full flex items-center justify-center space-x-2 border-primary/30 bg-secondary/50 text-foreground hover:bg-primary/20 hover:text-primary"
+                className="w-full flex items-center justify-center space-x-2 border-gray-200 bg-white text-gray-700 hover:bg-gray-50 hover:text-black hover:border-black transition-all"
                 onClick={() => handleOAuthSignIn('google')}
                 disabled={oauthLoading !== null}
               >
                 {oauthLoading === 'google' ? (
-                  <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                  <Loader2 className="h-4 w-4 animate-spin text-black" />
                 ) : (
                   <SiGoogle className="h-4 w-4 text-red-500" />
                 )}
@@ -146,10 +151,10 @@ export function SignInForm() {
           {/* 分割线 */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-primary/30" />
+              <span className="w-full border-t border-gray-200" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-secondary px-2 text-muted-foreground">
+              <span className="bg-white px-2 text-gray-400">
                 {locale === "en" ? "Or continue with email" : "或使用邮箱登录"}
               </span>
             </div>
@@ -157,38 +162,38 @@ export function SignInForm() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-foreground font-medium">{t('email')}</Label>
+              <Label htmlFor="email" className="text-black font-medium">{t('email')}</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary h-4 w-4" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
                   id="email"
                   type="email"
                   placeholder={t('email_placeholder')}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10 bg-secondary/50 border-primary/30 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
+                  className="pl-10 bg-gray-50 border-gray-200 text-black placeholder:text-gray-400 focus:border-black focus:ring-0 rounded-lg"
                   required
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-foreground font-medium">{t('password')}</Label>
+              <Label htmlFor="password" className="text-black font-medium">{t('password')}</Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary h-4 w-4" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder={t('password_placeholder')}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10 pr-10 bg-secondary/50 border-primary/30 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
+                  className="pl-10 pr-10 bg-gray-50 border-gray-200 text-black placeholder:text-gray-400 focus:border-black focus:ring-0 rounded-lg"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary hover:text-primary/80"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-black"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -198,7 +203,7 @@ export function SignInForm() {
             <div className="flex items-center justify-between">
               <Link
                 href={getLocalizedPath('/auth/forgot-password')}
-                className="text-sm text-primary hover:text-primary/80 font-medium"
+                className="text-sm text-gray-500 hover:text-black font-medium transition-colors"
               >
                 {t('forgot_password')}
               </Link>
@@ -207,7 +212,7 @@ export function SignInForm() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-primary hover:bg-cyber-400 text-dark-900 font-medium py-2.5 transition-all duration-300 cyber-glow"
+              className="w-full bg-black hover:bg-gray-800 text-white font-bold py-2.5 rounded-lg transition-all duration-300"
             >
               {isLoading ? (
                 <>
@@ -223,16 +228,11 @@ export function SignInForm() {
             </Button>
           </form>
 
-          <div className="text-center text-sm text-muted-foreground">
+          <div className="text-center text-sm text-gray-500">
             {t('no_account')}{' '}
             <Link
-              href={(() => {
-                const callbackUrl = getCallbackUrl()
-                return callbackUrl
-                  ? `${getLocalizedPath('/auth/signup')}?callbackUrl=${encodeURIComponent(callbackUrl)}`
-                  : getLocalizedPath('/auth/signup')
-              })()}
-              className="text-primary hover:text-primary/80 font-medium"
+              href={signupHref}
+              className="text-black hover:underline font-bold"
             >
               {t('signup_now')}
             </Link>

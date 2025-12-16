@@ -3,12 +3,7 @@
 import { useEffect } from "react"
 
 import { Navbar } from "@/components/navbar"
-import { HeroSection } from "@/components/hero-section"
-import { FeaturesSection } from "@/components/features-section"
-import { PricingSection } from "@/components/pricing-section"
-import { Testimonials } from "@/components/testimonials"
-import { FAQSection } from "@/components/faq-section"
-import { BlogSection } from "@/components/blog-section"
+import { PaletteGenerator } from "@/components/artpalette/palette-generator"
 import { Footer } from "@/components/footer"
 import { PageBackground } from "@/components/page-background"
 
@@ -32,12 +27,7 @@ export default function ChinesePage() {
 
       <Navbar />
       <main>
-        <HeroSection />
-        <FeaturesSection />
-        <PricingSection />
-        <Testimonials />
-        <FAQSection />
-        <BlogSection />
+        <PaletteGenerator />
       </main>
       <Footer />
     </PageBackground>

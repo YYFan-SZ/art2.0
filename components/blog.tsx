@@ -48,7 +48,7 @@ export function Blog() {
             </CardHeader>
             <CardContent className="pt-0">
               <Link href={`/${locale}/blog/saas-website-examples`} target="_blank" rel="noopener noreferrer">
-                <Button variant="ghost" className="group p-0 text-primary hover:text-primary-foreground hover:bg-primary px-4 py-2 rounded-lg transition-all duration-300 cyber-glow-subtle">
+                <Button variant="ghost" className="group p-0 text-primary hover:text-primary-foreground hover:bg-primary px-4 py-2 rounded-lg transition-all duration-300">
                   {t('readMore')}
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
@@ -78,7 +78,7 @@ export function Blog() {
             </CardHeader>
             <CardContent className="pt-0">
               <Link href={`/${locale}/blog/saas-features`} target="_blank" rel="noopener noreferrer">
-                <Button variant="ghost" className="group p-0 text-primary hover:text-primary-foreground hover:bg-primary px-4 py-2 rounded-lg transition-all duration-300 cyber-glow-subtle">
+                <Button variant="ghost" className="group p-0 text-primary hover:text-primary-foreground hover:bg-primary px-4 py-2 rounded-lg transition-all duration-300">
                   {t('readMore')}
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
@@ -108,7 +108,7 @@ export function Blog() {
             </CardHeader>
             <CardContent className="pt-0">
               <Link href={`/${locale}/blog/what-is-saas`} target="_blank" rel="noopener noreferrer">
-                <Button variant="ghost" className="group p-0 text-primary hover:text-primary-foreground hover:bg-primary px-4 py-2 rounded-lg transition-all duration-300 cyber-glow-subtle">
+                <Button variant="ghost" className="group p-0 text-primary hover:text-primary-foreground hover:bg-primary px-4 py-2 rounded-lg transition-all duration-300">
                   {t('readMore')}
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>

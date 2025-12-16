@@ -8,19 +8,19 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 // 产品配置
 const PRODUCT_CONFIG = {
-  name: 'Get SaaS',
+  name: 'AIArtPalette',
   description: {
-    zh: '专为出海设计的现代化SaaS模版',
-    en: 'Modern SaaS Template Designed for Global Markets'
+    zh: '艺术主题配色生成器',
+    en: 'Art Theme Palette Generator'
   },
   colors: {
-    primary: '#00D4E7', // 亮色模式主色
-    primaryDark: '#00F0FF', // 暗色模式主色
-    background: '#FAFAFA', // 亮色背景
-    backgroundDark: '#1A1A1A', // 暗色背景
-    text: '#262626', // 亮色文字
-    textDark: '#EAEAEA', // 暗色文字
-    muted: '#64748B' // 中性文字
+    primary: '#7C3AED',
+    primaryDark: '#6D28D9',
+    background: '#FAFAFA',
+    backgroundDark: '#1A1A1A',
+    text: '#1F2937',
+    textDark: '#F3F4F6',
+    muted: '#6B7280'
   }
 }
 
@@ -158,7 +158,9 @@ export async function sendVerificationEmail(email: string, token: string, locale
   
   try {
     const { data, error } = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || `${PRODUCT_CONFIG.name} <onboarding@resend.dev>`,
+      from: (process.env.EMAIL_FROM_NAME && process.env.EMAIL_FROM)
+        ? `${process.env.EMAIL_FROM_NAME} <${process.env.EMAIL_FROM}>`
+        : (process.env.EMAIL_FROM || `${PRODUCT_CONFIG.name} <onboarding@resend.dev>`),
       to: [email],
       subject: template.subject,
       html: generateEmailTemplate(verificationUrl, template),
@@ -183,7 +185,9 @@ export async function sendPasswordResetEmail(email: string, token: string, local
   
   try {
     const { data, error } = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || `${PRODUCT_CONFIG.name} <onboarding@resend.dev>`,
+      from: (process.env.EMAIL_FROM_NAME && process.env.EMAIL_FROM)
+        ? `${process.env.EMAIL_FROM_NAME} <${process.env.EMAIL_FROM}>`
+        : (process.env.EMAIL_FROM || `${PRODUCT_CONFIG.name} <onboarding@resend.dev>`),
       to: [email],
       subject: template.subject,
       html: generateEmailTemplate(resetUrl, template),

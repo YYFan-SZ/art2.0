@@ -106,16 +106,16 @@ export function ResetPasswordForm() {
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md shadow-2xl border-0 bg-secondary/80 backdrop-blur-sm cyber-glow-subtle">
         <CardHeader className="text-center space-y-4">
-          <div className="mx-auto w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center shadow-lg border border-primary/30">
+          <div className="mx-auto w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center shadow-lg border border-[#7c3aed]/30">
             <Image
               src="/logo.png"
-              alt="Get SaaS"
+              alt="AIArtPalette"
               width={48}
               height={48}
               className="object-contain"
             />
           </div>
-          <CardTitle className="text-2xl font-bold text-primary">
+          <CardTitle className="text-2xl font-bold text-foreground">
             {t('title')}
           </CardTitle>
           <CardDescription className="text-muted-foreground">
@@ -126,14 +126,14 @@ export function ResetPasswordForm() {
         <CardContent className="space-y-6">
           {status === 'success' ? (
             <div className="text-center space-y-4">
-              <Alert className="border-primary/30 bg-primary/20">
-                <CheckCircle className="h-4 w-4 text-primary" />
-                <AlertDescription className="text-primary/80">
+              <Alert className="border-black/30 bg-black/10">
+                <CheckCircle className="h-4 w-4 text-black" />
+                <AlertDescription className="text-black">
                   {message}
                 </AlertDescription>
               </Alert>
-              <Button asChild className="w-full bg-primary hover:bg-primary/90 text-primary-foreground cyber-glow">
-                <Link href={getLocalizedPath("/auth/signin")}>
+              <Button asChild className="w-full">
+                <Link href={getLocalizedPath("/auth/signin")}> 
                   {t('login_now')}
                 </Link>
               </Button>
@@ -160,9 +160,9 @@ export function ResetPasswordForm() {
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-primary" />
+                      <EyeOff className="h-4 w-4 text-black" />
                     ) : (
-                      <Eye className="h-4 w-4 text-primary" />
+                      <Eye className="h-4 w-4 text-black" />
                     )}
                   </Button>
                 </div>
@@ -188,9 +188,9 @@ export function ResetPasswordForm() {
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? (
-                      <EyeOff className="h-4 w-4 text-primary" />
+                      <EyeOff className="h-4 w-4 text-black" />
                     ) : (
-                      <Eye className="h-4 w-4 text-primary" />
+                      <Eye className="h-4 w-4 text-black" />
                     )}
                   </Button>
                 </div>
@@ -207,7 +207,7 @@ export function ResetPasswordForm() {
 
               <Button
                 type="submit"
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 cyber-glow"
+                className="w-full"
                 disabled={isLoading || !token}
               >
                 {isLoading ? t('resetting') : t('reset_password')}
@@ -216,7 +216,7 @@ export function ResetPasswordForm() {
               <div className="text-center">
                 <Link
                   href={getLocalizedPath("/auth/forgot-password")}
-                  className="text-muted-foreground hover:text-primary text-sm font-medium inline-flex items-center"
+                  className="text-muted-foreground hover:text-black text-sm font-medium inline-flex items-center"
                 >
                   <ArrowLeft className="mr-1 h-4 w-4" />
                   {t('back_to_forgot')}

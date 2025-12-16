@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "Get SaaS - 专为出海设计的现代化SaaS模版",
-    "description": "Get SaaS是专为出海设计的现代化SaaS模版，集成完整的用户认证、支付系统、多语言支持、SEO优化等功能。基于Next.js构建，帮助开发者快速启动SaaS产品。",
+    "title": "AIArtPalette - 专为出海设计的现代化SaaS模版",
+    "description": "AIArtPalette是专为出海设计的现代化SaaS模版，集成完整的用户认证、支付系统、多语言支持、SEO优化等功能。基于Next.js构建，帮助开发者快速启动SaaS产品。",
     "terms": {
       "title": "服务条款 - Get SaaS",
       "description": "查看Get SaaS SaaS模版的使用条款，了解模版使用规则、许可协议和用户权利责任。"
@@ -17,7 +17,7 @@
   },
   "demoBanner": {
     "prefix": "这是",
-    "productName": "Get SaaS",
+    "productName": "AIArtPalette",
     "suffix": "演示站点，体验完整功能后",
     "cta": "立即购买完整版"
   },
@@ -53,6 +53,22 @@
     "podcastAgent": {
       "title": "支付集成",
       "description": "内置Stripe支付系统，支持订阅计费、一次性付款等多种支付模式，助您快速实现商业化。"
+    },
+    "i18nSupport": {
+      "title": "多语言支持",
+      "description": "支持中文与英文，URL与元数据本地化，SEO友好，可轻松扩展更多语言。"
+    },
+    "seoOptimization": {
+      "title": "SEO优化",
+      "description": "内置站点地图、Open Graph、结构化数据与多语言SEO，提升搜索可见性。"
+    },
+    "dashboard": {
+      "title": "用户仪表板",
+      "description": "订阅管理、积分系统与个人资料设置，提供完整的用户中心体验。"
+    },
+    "security": {
+      "title": "安全与合规",
+      "description": "CSRF防护、输入验证、会话安全与数据加密，遵循安全最佳实践。"
     }
   },
   "pricing": {
@@ -104,14 +120,14 @@
     }
   },
   "faq": {
-    "title": "关于Get SaaS模版的常见问题",
+    "title": "关于AIArtPalette模版的常见问题",
     "categories": {
       "usage": "使用相关",
       "pricing": "价格方案"
     },
     "usage": {
       "howToStart": {
-        "question": "如何开始使用Get SaaS模版？",
+        "question": "如何开始使用AIArtPalette模版？",
         "answer": "非常简单！下载模版后，按照文档说明配置环境变量（数据库、Stripe等），然后运行npm install和npm run dev即可启动。模版包含完整的用户认证、支付系统和多语言支持，您只需专注于业务逻辑开发。"
       },
       "voiceQuality": {
@@ -120,7 +136,7 @@
       },
       "contentOwnership": {
         "question": "购买模版后的使用权限如何？",
-        "answer": "购买Get SaaS后，您获得完整的源码使用权。可以自由修改、定制和商业化使用，无需支付额外费用。我们提供终身更新和技术支持。"
+        "answer": "购买AIArtPalette后，您获得完整的源码使用权。可以自由修改、定制和商业化使用，无需支付额外费用。我们提供终身更新和技术支持。"
       },
       "dataPrivacy": {
         "question": "模版是否包含数据安全保护？",
@@ -187,13 +203,13 @@
         "unsubscribeError": "取消订阅失败"
       }
     },
-    "copyright": "Get SaaS. 版权所有."
+    "copyright": "AIArtPalette. 版权所有."
   },
   "verify": {
     "title": "邮箱验证",
     "description": "验证您的邮箱地址以完成账户注册",
     "meta_title": "邮箱验证",
-    "meta_description": "验证您的 Get SaaS 账户邮箱，完成账户激活",
+    "meta_description": "验证您的 AIArtPalette 账户邮箱，完成账户激活",
     "verifying": "正在验证您的邮箱...",
     "success": "邮箱验证成功！",
     "failed": "邮箱验证失败",
@@ -206,11 +222,11 @@
     "back_to_login": "返回登录"
   },
   "auth": {
-    "meta_title": "用户认证 - Get SaaS",
+    "meta_title": "用户认证 - AIArtPalette",
     "signin_title": "登录",
-    "signin_description": "登录您的 Get SaaS 账户，开始使用现代化SaaS模版",
+    "signin_description": "登录您的 AIArtPalette 账户，开始使用现代化SaaS模版",
     "signup_title": "注册",
-    "signup_description": "注册 Get SaaS 账户，开启SaaS开发之旅",
+    "signup_description": "注册 AIArtPalette 账户，开启SaaS开发之旅",
     "error_title": "认证错误",
     "error_description": "认证过程中遇到问题，请重试或联系技术支持",
     "error_page_title": "登录失败",
@@ -237,7 +253,7 @@
       "default": "认证过程中发生未知错误，请重试"
     },
     "welcome_back": "欢迎回来",
-    "login_description": "登录您的 Get SaaS 账户",
+    "login_description": "登录您的 AIArtPalette 账户",
     "email": "邮箱地址",
     "password": "密码",
     "email_placeholder": "请输入您的邮箱",
@@ -284,7 +300,7 @@
     "title": "找回密码",
     "description": "输入您的邮箱地址，我们将向您发送重置密码的链接",
     "meta_title": "找回密码",
-    "meta_description": "找回您的 Get SaaS 账户密码，通过邮箱重置密码",
+    "meta_description": "找回您的 AIArtPalette 账户密码，通过邮箱重置密码",
     "email_label": "邮箱地址",
     "email_placeholder": "请输入您的邮箱地址",
     "send_reset_link": "发送重置链接",
@@ -302,7 +318,7 @@
     "title": "重置密码",
     "description": "请输入您的新密码",
     "meta_title": "重置密码",
-    "meta_description": "重置您的 Get SaaS 账户密码，设置新的安全密码",
+    "meta_description": "重置您的 AIArtPalette 账户密码，设置新的安全密码",
     "password_label": "新密码",
     "password_placeholder": "请输入新密码",
     "confirm_password_label": "确认密码",
@@ -617,12 +633,12 @@
     "description": "加入数千名已经在使用 Get SaaS 快速构建和部署SaaS产品的开发者和创业者"
   },
   "blogPage": {
-    "title": "Get SaaS 博客",
+    "title": "AIArtPalette 博客",
     "subtitle": "探索SaaS开发的最新动态和技术分享",
     "contactPost": {
       "badge": "最新",
       "date": "2024年12月",
-      "author": "Get SaaS Team",
+    "author": "AIArtPalette Team",
       "title": "联系我们 - 让我们一起探索SaaS开发的无限可能",
       "description": "我们很高兴与您建立联系！无论您是想了解我们的SaaS模版服务，还是有任何技术问题，我们都随时准备为您提供帮助。",
       "contactMethods": {
@@ -663,14 +679,14 @@
       "post1": {
         "category": "技术解析",
         "date": "2025年7月",
-        "title": "Get SaaS可以做哪些网站？",
-        "excerpt": "深入了解Get SaaS模版的应用场景，从电商平台到企业管理系统，再到在线教育平台的完整解决方案。"
+        "title": "AIArtPalette可以做哪些网站？",
+        "excerpt": "深入了解AIArtPalette模版的应用场景，从电商平台到企业管理系统，再到在线教育平台的完整解决方案。"
       },
       "post2": {
         "category": "产品介绍",
         "date": "2025年7月",
-        "title": "Get SaaS有什么功能？",
-        "excerpt": "深入了解Get SaaS模版提供的核心功能：用户认证、支付系统、多语言支持、SEO优化等完整解决方案。"
+        "title": "AIArtPalette有什么功能？",
+        "excerpt": "深入了解AIArtPalette模版提供的核心功能：用户认证、支付系统、多语言支持、SEO优化等完整解决方案。"
       },
       "post3": {
         "category": "行业洞察",
@@ -679,6 +695,50 @@
         "excerpt": "深入了解SaaS的定义、商业模式和技术架构，以及如何快速构建现代化SaaS产品。"
       },
       "readMore": "阅读更多"
+    }
+  }
+  ,
+  "pricingExplain": {
+    "title": "定价与套餐说明",
+    "description": "选择适合你的订阅或充值套餐，支付后自动到账",
+    "sections": {
+      "subscriptionsTitle": "订阅套餐",
+      "pointsTitle": "积分充值"
+    },
+    "subscriptions": {
+      "giftedPointsPerCycle": "每周期赠送 {points} 积分"
+    },
+    "points": {
+      "description": "购买积分，永不过期",
+      "packageName": "积分套餐",
+      "itemDescription": "{count} 积分"
+    },
+    "buttons": {
+      "subscribeNow": "立即订阅",
+      "buyNow": "立即购买",
+      "backHome": "返回首页"
+    },
+    "planNames": {
+      "pro": "月度套餐",
+      "pro_3m": "三个月套餐",
+      "pro_6m": "六个月套餐"
+    },
+    "features": {
+      "pro": {
+        "item1": "每周期积分限制",
+        "item2": "含 {count} 积分",
+        "item3": "基础支持"
+      },
+      "pro_3m": {
+        "item1": "每周期积分限制",
+        "item2": "含 {count} 积分",
+        "item3": "优先支持"
+      },
+      "pro_6m": {
+        "item1": "每周期积分限制",
+        "item2": "含 {count} 积分",
+        "item3": "优先支持"
+      }
     }
   }
 }

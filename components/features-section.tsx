@@ -22,6 +22,30 @@ export function FeaturesSection() {
       description: t("podcastAgent.description"),
       image: "/payment-demo.png",
     },
+    {
+      icon: Globe,
+      title: t("i18nSupport.title"),
+      description: t("i18nSupport.description"),
+      image: "/logo.png",
+    },
+    {
+      icon: Search,
+      title: t("seoOptimization.title"),
+      description: t("seoOptimization.description"),
+      image: "/logo.png",
+    },
+    {
+      icon: Code,
+      title: t("dashboard.title"),
+      description: t("dashboard.description"),
+      image: "/logo.png",
+    },
+    {
+      icon: Shield,
+      title: t("security.title"),
+      description: t("security.description"),
+      image: "/logo.png",
+    },
   ]
 
   // 自动播放功能

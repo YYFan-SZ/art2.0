@@ -1,19 +1,19 @@
 export const seoConfig = {
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL || '',
-  siteName: 'Get SaaS',
+  siteName: 'AIArtPalette',
   defaultLocale: 'zh',
   locales: ['zh', 'en'],
   
   // 默认SEO设置
   defaultSEO: {
     zh: {
-      title: 'Get SaaS - 专为出海设计的现代化SaaS模版',
-      description: 'Get SaaS是专为出海设计的现代化SaaS模版，集成完整的用户认证、支付系统、多语言支持、SEO优化等功能。基于Next.js构建，帮助开发者快速启动SaaS产品。',
+      title: 'AIArtPalette - 专为出海设计的现代化SaaS模版',
+      description: 'AIArtPalette是专为出海设计的现代化SaaS模版，集成完整的用户认证、支付系统、多语言支持、SEO优化等功能。基于Next.js构建，帮助开发者快速启动SaaS产品。',
       keywords: 'SaaS模版,出海SaaS,Next.js模版,SaaS启动模版,多语言SaaS,支付集成,用户认证,SEO优化,现代化UI,响应式设计,TypeScript,Tailwind CSS,SaaS开发,快速启动,云原生,企业软件',
     },
     en: {
-      title: 'Get SaaS - Modern SaaS Template Designed for Global Markets',
-      description: 'Get SaaS is a modern SaaS template designed for global markets, featuring complete user authentication, payment systems, multi-language support, and SEO optimization. Built with Next.js to help developers launch SaaS products quickly.',
+      title: 'AIArtPalette - Modern SaaS Template Designed for Global Markets',
+      description: 'AIArtPalette is a modern SaaS template designed for global markets, featuring complete user authentication, payment systems, multi-language support, and SEO optimization. Built with Next.js to help developers launch SaaS products quickly.',
       keywords: 'SaaS Template,Global SaaS,Next.js Template,SaaS Starter,Multi-language SaaS,Payment Integration,User Authentication,SEO Optimization,Modern UI,Responsive Design,TypeScript,Tailwind CSS,SaaS Development,Quick Launch,Cloud Native,Enterprise Software',
     }
   },
@@ -22,12 +22,12 @@ export const seoConfig = {
   pages: {
     blog: {
       zh: {
-        title: 'Get SaaS 博客 - SaaS开发技术分享与最佳实践',
+        title: 'AIArtPalette 博客 - SaaS开发技术分享与最佳实践',
         description: '探索SaaS开发的最新技术动态和最佳实践，深入了解Next.js、用户认证、支付集成、多语言支持等SaaS产品开发的核心技术。',
         keywords: 'SaaS开发博客,Next.js技术,用户认证,支付集成,多语言支持,SaaS架构,前端开发,全栈开发,TypeScript,Tailwind CSS',
       },
       en: {
-        title: 'Get SaaS Blog - SaaS Development Insights & Best Practices',
+        title: 'AIArtPalette Blog - SaaS Development Insights & Best Practices',
         description: 'Explore the latest SaaS development trends and best practices, learn about Next.js, user authentication, payment integration, multi-language support and other core technologies for SaaS product development.',
         keywords: 'SaaS Development Blog,Next.js Technology,User Authentication,Payment Integration,Multi-language Support,SaaS Architecture,Frontend Development,Full-stack Development,TypeScript,Tailwind CSS',
       }
@@ -83,26 +83,26 @@ export const seoConfig = {
     },
     'saas-website-examples': {
       zh: {
-        title: 'Get SaaS可以做哪些网站？ - SaaS模版应用场景和案例详解',
+        title: 'AIArtPalette可以做哪些网站？ - SaaS模版应用场景和案例详解',
         description: '深入了解Get SaaS模版的应用场景，从电商平台到企业管理系统，再到在线教育平台的完整解决方案。探索SaaS模版在不同行业的实际应用案例。',
-        keywords: 'SaaS模版,SaaS应用场景,电商平台,企业管理系统,在线教育平台,项目管理工具,CRM系统,ERP系统,SaaS网站案例,SaaS开发,Get SaaS',
+        keywords: 'SaaS模版,SaaS应用场景,电商平台,企业管理系统,在线教育平台,项目管理工具,CRM系统,ERP系统,SaaS网站案例,SaaS开发,AIArtPalette',
       },
       en: {
-        title: 'What Websites Can Get SaaS Build? - SaaS Template Use Cases and Examples',
+        title: 'What Websites Can AIArtPalette Build? - SaaS Template Use Cases and Examples',
         description: 'Understand Get SaaS template application scenarios, from e-commerce platforms to enterprise management systems, to online education platforms. Explore real-world SaaS template use cases across different industries.',
-        keywords: 'SaaS Template,SaaS Use Cases,E-commerce Platform,Enterprise Management System,Online Education Platform,Project Management Tool,CRM System,ERP System,SaaS Website Examples,SaaS Development,Get SaaS',
+        keywords: 'SaaS Template,SaaS Use Cases,E-commerce Platform,Enterprise Management System,Online Education Platform,Project Management Tool,CRM System,ERP System,SaaS Website Examples,SaaS Development,AIArtPalette',
       }
     },
     'saas-features': {
       zh: {
-        title: 'Get SaaS有什么功能？ - SaaS模版核心功能和技术特性详解',
-        description: '深入了解Get SaaS模版提供的核心功能：用户认证、支付系统、多语言支持、SEO优化等完整解决方案。探索现代化SaaS开发的技术栈和最佳实践。',
-        keywords: 'SaaS模版功能,用户认证系统,Stripe支付集成,多语言国际化,SEO优化,Next.js,TypeScript,PostgreSQL,SaaS开发,现代化技术栈,Get SaaS',
+        title: 'AIArtPalette有什么功能？ - SaaS模版核心功能和技术特性详解',
+        description: '深入了解AIArtPalette模版提供的核心功能：用户认证、支付系统、多语言支持、SEO优化等完整解决方案。探索现代化SaaS开发的技术栈和最佳实践。',
+        keywords: 'SaaS模版功能,用户认证系统,Stripe支付集成,多语言国际化,SEO优化,Next.js,TypeScript,PostgreSQL,SaaS开发,现代化技术栈,AIArtPalette',
       },
       en: {
-        title: 'What Features Does Get SaaS Have? - SaaS Template Core Features and Technical Specifications',
-        description: 'Explore the core features provided by Get SaaS template: user authentication, payment systems, multi-language support, SEO optimization and more. Discover modern SaaS development technology stack and best practices.',
-        keywords: 'SaaS Template Features,User Authentication System,Stripe Payment Integration,Multi-language Internationalization,SEO Optimization,Next.js,TypeScript,PostgreSQL,SaaS Development,Modern Tech Stack,Get SaaS',
+        title: 'What Features Does AIArtPalette Have? - SaaS Template Core Features and Technical Specifications',
+        description: 'Explore the core features provided by AIArtPalette template: user authentication, payment systems, multi-language support, SEO optimization and more. Discover modern SaaS development technology stack and best practices.',
+        keywords: 'SaaS Template Features,User Authentication System,Stripe Payment Integration,Multi-language Internationalization,SEO Optimization,Next.js,TypeScript,PostgreSQL,SaaS Development,Modern Tech Stack,AIArtPalette',
       }
     }
   },
@@ -137,12 +137,12 @@ export const seoConfig = {
 
   // 结构化数据设置
   organization: {
-    name: 'Get SaaS',
+    name: 'AIArtPalette',
     foundingDate: '2025',
     industry: 'Software Development',
     numberOfEmployees: '1-10',
     contactEmail: 'app@itusi.cn',
-    url: 'https://getsaaspro.com',
+    url: 'https://aiartpalette.com',
     description: 'Modern SaaS template designed for global markets with complete authentication, payment systems, and multi-language support.',
     keywords: ['SaaS Template', 'Next.js', 'TypeScript', 'Global Markets', 'Multi-language'],
     sameAs: [

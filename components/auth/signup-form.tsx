@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Eye, EyeOff, Mail, Lock, User, ArrowRight, Loader2, CheckCircle } from 'lucide-react'
-import { SiGithub, SiGoogle } from 'react-icons/si'
+import { SiGoogle } from 'react-icons/si'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useLocale, useTranslations } from 'next-intl'
@@ -42,6 +42,17 @@ export function SignUpForm() {
     }
     return null
   }
+
+  const [signinHref, setSigninHref] = useState(getLocalizedPath('/auth/signin'))
+
+  useEffect(() => {
+    const cb = getCallbackUrl()
+    setSigninHref(
+      cb
+        ? `${getLocalizedPath('/auth/signin')}?callbackUrl=${encodeURIComponent(cb)}`
+        : getLocalizedPath('/auth/signin')
+    )
+  }, [locale])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -107,67 +118,53 @@ export function SignUpForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md shadow-2xl border-0 bg-secondary/80 backdrop-blur-sm cyber-glow-subtle">
-        <CardHeader className="text-center space-y-4">
-          <div className="mx-auto w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center shadow-lg border border-primary/30">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+      <Card className="w-full max-w-md shadow-xl border-0 bg-white rounded-2xl">
+        <CardHeader className="text-center space-y-4 pt-8">
+          <div className="mx-auto w-16 h-16 bg-black rounded-2xl flex items-center justify-center shadow-lg">
             <Image
               src="/logo.png"
-              alt="Get SaaS"
-              width={48}
-              height={48}
-              className="object-contain"
+              alt="AIArtPalette"
+              width={40}
+              height={40}
+              className="object-contain invert brightness-0 saturate-100 invert-0"
+              style={{ filter: "invert(1)" }}
             />
           </div>
-          <CardTitle className="text-2xl font-bold text-primary">
+          <CardTitle className="text-2xl font-bold text-black">
             {t('create_account')}
           </CardTitle>
-          <CardDescription className="text-muted-foreground">
+          <CardDescription className="text-gray-500">
             {t('signup_description')}
           </CardDescription>
         </CardHeader>
         
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 pb-8">
           {error && (
-            <Alert className="border-red-500/30 bg-red-500/20">
-              <AlertDescription className="text-red-300">{error}</AlertDescription>
+            <Alert className="border-red-500/30 bg-red-50">
+              <AlertDescription className="text-red-600">{error}</AlertDescription>
             </Alert>
           )}
 
           {success && (
-            <Alert className="border-primary/30 bg-primary/20">
-              <CheckCircle className="h-4 w-4 text-primary" />
-              <AlertDescription className="text-primary/80">{success}</AlertDescription>
+            <Alert className="border-green-500/30 bg-green-50">
+              <CheckCircle className="h-4 w-4 text-green-600" />
+              <AlertDescription className="text-green-600">{success}</AlertDescription>
             </Alert>
           )}
 
-          {/* 第三方登录按钮 */}
+          {/* 第三方登录按钮（移除 GitHub，仅保留 Google） */}
           <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 gap-2">
               <Button
                 type="button"
                 variant="outline"
-                className="w-full flex items-center justify-center space-x-2 border-primary/30 bg-secondary/50 text-foreground hover:bg-primary/20 hover:text-primary"
-                onClick={() => handleOAuthSignIn('github')}
-                disabled={oauthLoading !== null}
-              >
-                {oauthLoading === 'github' ? (
-                  <Loader2 className="h-4 w-4 animate-spin text-primary" />
-                ) : (
-                  <SiGithub className="h-4 w-4" />
-                )}
-                <span>GitHub</span>
-              </Button>
-
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full flex items-center justify-center space-x-2 border-primary/30 bg-secondary/50 text-foreground hover:bg-primary/20 hover:text-primary"
+                className="w-full flex items-center justify-center space-x-2 border-gray-200 bg-white text-gray-700 hover:bg-gray-50 hover:text-black hover:border-black transition-all"
                 onClick={() => handleOAuthSignIn('google')}
                 disabled={oauthLoading !== null}
               >
                 {oauthLoading === 'google' ? (
-                  <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                  <Loader2 className="h-4 w-4 animate-spin text-black" />
                 ) : (
                   <SiGoogle className="h-4 w-4 text-red-500" />
                 )}
@@ -179,10 +176,10 @@ export function SignUpForm() {
           {/* 分割线 */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-primary/30" />
+              <span className="w-full border-t border-gray-200" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-secondary px-2 text-muted-foreground">
+              <span className="bg-white px-2 text-gray-400">
                 {locale === "en" ? "Or register with email" : "或使用邮箱注册"}
               </span>
             </div>
@@ -190,54 +187,54 @@ export function SignUpForm() {
           
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-foreground font-medium">{t('name')}</Label>
+              <Label htmlFor="name" className="text-black font-medium">{t('name')}</Label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary h-4 w-4" />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
                   id="name"
                   type="text"
                   placeholder={t('name_placeholder')}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="pl-10 bg-secondary/50 border-primary/30 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
+                  className="pl-10 bg-gray-50 border-gray-200 text-black placeholder:text-gray-400 focus:border-black focus:ring-0 rounded-lg"
                   required
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-foreground font-medium">{t('email')}</Label>
+              <Label htmlFor="email" className="text-black font-medium">{t('email')}</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary h-4 w-4" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
                   id="email"
                   type="email"
                   placeholder={t('email_placeholder')}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10 bg-secondary/50 border-primary/30 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
+                  className="pl-10 bg-gray-50 border-gray-200 text-black placeholder:text-gray-400 focus:border-black focus:ring-0 rounded-lg"
                   required
                 />
               </div>
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-foreground font-medium">{t('password')}</Label>
+              <Label htmlFor="password" className="text-black font-medium">{t('password')}</Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary h-4 w-4" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder={t('password_signup_placeholder')}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10 pr-10 bg-secondary/50 border-primary/30 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
+                  className="pl-10 pr-10 bg-gray-50 border-gray-200 text-black placeholder:text-gray-400 focus:border-black focus:ring-0 rounded-lg"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary hover:text-primary/80"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-black"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -245,22 +242,22 @@ export function SignUpForm() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword" className="text-foreground font-medium">{t('confirm_password')}</Label>
+              <Label htmlFor="confirmPassword" className="text-black font-medium">{t('confirm_password')}</Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary h-4 w-4" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
                   id="confirmPassword"
                   type={showConfirmPassword ? 'text' : 'password'}
                   placeholder={t('confirm_password_placeholder')}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="pl-10 pr-10 bg-secondary/50 border-primary/30 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
+                  className="pl-10 pr-10 bg-gray-50 border-gray-200 text-black placeholder:text-gray-400 focus:border-black focus:ring-0 rounded-lg"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary hover:text-primary/80"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-black"
                 >
                   {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -270,7 +267,7 @@ export function SignUpForm() {
             <Button
               type="submit"
               disabled={isLoading || success !== ''}
-              className="w-full bg-primary hover:bg-cyber-400 text-dark-900 font-medium py-2.5 transition-all duration-300 cyber-glow"
+              className="w-full bg-black hover:bg-gray-800 text-white font-bold py-2.5 rounded-lg transition-all duration-300"
             >
               {isLoading ? (
                 <>
@@ -291,33 +288,28 @@ export function SignUpForm() {
             </Button>
           </form>
           
-          <div className="text-center text-sm text-muted-foreground">
+          <div className="text-center text-sm text-gray-500">
             {t('terms_agreement')}{' '}
             <Link
               href={locale === "en" ? "/en/terms" : "/zh/terms"}
-              className="text-primary hover:text-primary/80 font-medium"
+              className="text-black hover:underline font-medium"
             >
               {t('terms_of_service')}
             </Link>
             {' '}{t('and')}{' '}
             <Link
               href={locale === "en" ? "/en/privacy" : "/zh/privacy"}
-              className="text-primary hover:text-primary/80 font-medium"
+              className="text-black hover:underline font-medium"
             >
               {t('privacy_policy')}
             </Link>
           </div>
 
-          <div className="text-center text-sm text-muted-foreground">
+          <div className="text-center text-sm text-gray-500">
             {t('has_account')}{' '}
             <Link
-              href={(() => {
-                const callbackUrl = getCallbackUrl()
-                return callbackUrl
-                  ? `${getLocalizedPath('/auth/signin')}?callbackUrl=${encodeURIComponent(callbackUrl)}`
-                  : getLocalizedPath('/auth/signin')
-              })()}
-              className="text-primary hover:text-primary/80 font-medium"
+              href={signinHref}
+              className="text-black hover:underline font-bold"
             >
               {t('login_now')}
             </Link>

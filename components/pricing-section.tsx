@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Check } from "lucide-react"
 import { useLocale, useTranslations } from "next-intl"
-import { StripeCheckoutButton } from "./stripe-checkout-button"
+import Link from "next/link"
 import { SUBSCRIPTION_PRICE_IDS } from "@/lib/stripe"
-import { DiscountPriceDisplay, RegularPriceDisplay } from "./discount-price-display"
+import { RegularPriceDisplay } from "./discount-price-display"
 
 export function PricingSection() {
   const locale = useLocale()
@@ -25,23 +25,49 @@ export function PricingSection() {
       planType: 'free',
     },
     {
-      name: t("pro.name"),
-      price: t("pro.price"),
-      originalPrice: t("pro.originalPrice"),
-      discountPercent: t("pro.discountPercent"),
-      savings: t("pro.savings"),
-      discountBadge: t("pro.discountBadge"),
-      description: t("pro.description"),
+      name: '月度订阅',
+      price: '$6.88',
+      description: '每月获得300积分（限量）',
       features: [
-        t("pro.features.template"),
-        t("pro.features.payment"),
-        t("pro.features.support"),
+        '每月300积分',
+        '积分用完可单独充值',
+        '基础技术支持',
       ],
-      cta: t("pro.cta"),
+      cta: '立即订阅',
       popular: true,
       priceId: SUBSCRIPTION_PRICE_IDS.pro,
       planType: 'pro',
-      hasDiscount: true,
+      hasDiscount: false,
+    },
+    {
+      name: '季度订阅',
+      price: '$15.88',
+      description: '三个月获得1000积分（限量）',
+      features: [
+        '三个月总计1000积分',
+        '积分用完可单独充值',
+        '优先技术支持',
+      ],
+      cta: '立即订阅',
+      popular: false,
+      priceId: (process.env.CREEM_SUBSCRIPTION_3M_PRICE_ID || ''),
+      planType: 'pro_3m',
+      hasDiscount: false,
+    },
+    {
+      name: '半年订阅',
+      price: '$29.88',
+      description: '半年获得3000积分（限量）',
+      features: [
+        '半年总计3000积分',
+        '积分用完可单独充值',
+        '优先技术支持',
+      ],
+      cta: '立即订阅',
+      popular: false,
+      priceId: (process.env.CREEM_SUBSCRIPTION_6M_PRICE_ID || ''),
+      planType: 'pro_6m',
+      hasDiscount: false,
     },
     {
       name: t("enterprise.name"),
@@ -89,17 +115,7 @@ export function PricingSection() {
 
                 {/* 价格显示区域 */}
                 <div className="mb-4">
-                  {plan.hasDiscount ? (
-                    <DiscountPriceDisplay
-                      originalPrice={plan.originalPrice}
-                      discountedPrice={plan.price}
-                      discountPercent={plan.discountPercent}
-                      savings={plan.savings}
-                      discountBadge={plan.discountBadge}
-                    />
-                  ) : (
-                    <RegularPriceDisplay price={plan.price} />
-                  )}
+                  <RegularPriceDisplay price={plan.price} />
                 </div>
 
                 <CardDescription>{plan.description}</CardDescription>
@@ -132,14 +148,12 @@ export function PricingSection() {
                     {plan.cta}
                   </Button>
                 ) : (
-                  <StripeCheckoutButton
-                    priceId={plan.priceId}
-                    planType={plan.planType}
-                    className={`w-full ${plan.popular ? "bg-primary text-primary-foreground hover:bg-primary/90 cyber-glow" : ""}`}
-                    variant={plan.popular ? "default" : "outline"}
+                  <Link
+                    href={`/${locale}/pricing`}
+                    className={`w-full inline-flex items-center justify-center rounded-md border ${plan.popular ? "bg-primary text-primary-foreground hover:bg-primary/90" : "border-primary text-primary hover:bg-primary hover:text-primary-foreground"} px-4 py-2`}
                   >
-                    {plan.cta}
-                  </StripeCheckoutButton>
+                    查看套餐
+                  </Link>
                 )}
               </CardContent>
             </Card>

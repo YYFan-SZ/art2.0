@@ -25,7 +25,7 @@ export function HeroSection() {
               variant="outline"
               className="px-4 py-2 text-sm font-medium bg-secondary border-primary text-primary cyber-glow-subtle"
             >
-              <Sparkles className="w-4 h-4 mr-2" />
+              <Sparkles className="w-4 h-4 mr-2 text-white" />
               {t("badge")}
             </Badge>
           </div>
@@ -65,7 +65,7 @@ export function HeroSection() {
                 key={index}
                 className="flex items-center gap-2 px-4 py-2 bg-secondary/80 rounded-full border border-secondary/50 hover:border-primary/50 transition-colors cyber-glow-subtle"
               >
-                <item.icon className="w-4 h-4 text-primary" />
+                <item.icon className="w-4 h-4 text-white" />
                 <span className="text-sm font-medium text-foreground">{item.text}</span>
               </div>
             ))}

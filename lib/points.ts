@@ -5,9 +5,10 @@ import { nanoid } from 'nanoid'
 
 // 积分配置 - 可以在这里修改各种奖励积分
 export const POINTS_CONFIG = {
-  REGISTER_BONUS: 100, // 注册赠送积分
-  DAILY_LOGIN_BONUS: 10, // 每日登录奖励
-  REFERRAL_BONUS: 200, // 推荐用户奖励
+  REGISTER_BONUS: 10,
+  DAILY_LOGIN_BONUS: 10,
+  REFERRAL_BONUS: 200,
+  USAGE_COST: 2
 } as const
 
 // 积分操作类型

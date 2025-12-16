@@ -6,9 +6,7 @@ import { Loader2 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
-import { loadStripe } from '@stripe/stripe-js'
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+// 改为 Creem 支付跳转（不再使用 Stripe 前端 SDK）
 
 interface StripeCheckoutButtonProps {
   priceId: string | null
@@ -44,7 +42,7 @@ export function StripeCheckoutButton({
     setIsLoading(true)
 
     try {
-      const response = await fetch('/api/stripe/checkout', {
+      const response = await fetch('/api/creem/checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,19 +59,11 @@ export function StripeCheckoutButton({
       if (!response.ok) {
         throw new Error(data.error || t('payment_failed'))
       }
-
-      const stripe = await stripePromise
-      if (!stripe) {
-        throw new Error('Stripe 加载失败')
+      // Creem 返回结算页面链接，直接跳转
+      if (!data.checkoutUrl) {
+        throw new Error(t('payment_failed'))
       }
-
-      const { error } = await stripe.redirectToCheckout({
-        sessionId: data.sessionId,
-      })
-
-      if (error) {
-        throw new Error(error.message)
-      }
+      window.location.href = data.checkoutUrl
     } catch (error) {
       console.error('支付错误:', error)
       alert(error instanceof Error ? error.message : t('payment_failed'))

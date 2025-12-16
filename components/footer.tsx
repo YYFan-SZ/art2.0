@@ -1,26 +1,20 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Github, Twitter, Linkedin, Globe, Mail, Send } from "lucide-react"
+import { Github, Twitter, Linkedin, Globe } from "lucide-react"
 import { useRouter, usePathname } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { useState } from "react"
 import Link from 'next/link'
 import { useLocale } from 'next-intl'
 import Image from 'next/image'
 import { SiGithub } from 'react-icons/si'
 
-export function Footer() {
+export function Footer({ minimal = false }: { minimal?: boolean }) {
   const locale = useLocale()
   const t = useTranslations("footer")
   const router = useRouter()
   const pathname = usePathname()
-  const [email, setEmail] = useState("")
-  const [isSubscribed, setIsSubscribed] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [message, setMessage] = useState("")
 
   // 获取当前年份
   const currentYear = new Date().getFullYear()
@@ -46,46 +40,7 @@ export function Footer() {
     }
   }
 
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
-
-    setIsLoading(true)
-    setMessage("")
-
-    try {
-      const response = await fetch('/api/newsletter/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          locale: locale,
-        }),
-      })
-
-      const data = await response.json()
-
-      if (response.ok) {
-        setIsSubscribed(true)
-        setEmail("")
-        setMessage(t('newsletter.subscribe.successMessage'))
-        // 3秒后重置状态
-        setTimeout(() => {
-          setIsSubscribed(false)
-          setMessage("")
-        }, 5000)
-      } else {
-        setMessage(data.error || t('newsletter.subscribe.subscribeError'))
-      }
-    } catch (error) {
-      console.error('Subscription error:', error)
-      setMessage(t('newsletter.subscribe.networkError'))
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  
 
   return (
     <footer className="relative bg-background border-t border-border">
@@ -95,134 +50,44 @@ export function Footer() {
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-secondary/5 rounded-full blur-3xl" />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {/* Company Info */}
-          <div className="space-y-8">
-            {/* Brand */}
-            <div className="space-y-4">
-              <Link href={getLocalizedPath("/")} className="flex items-center space-x-3">
-                <div className="relative w-8 h-8">
-                  <Image
-                    src="/logo.png"
-                    alt="Get SaaS Logo"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <span className="text-xl font-bold text-primary">
-                  Get SaaS
-                </span>
-              </Link>
-              <p className="text-muted-foreground leading-relaxed max-w-sm">
-                {t("description")}
-              </p>
+        {!minimal && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <Link href={getLocalizedPath("/")} className="flex items-center space-x-3">
+                  <div className="relative w-8 h-8">
+                    <Image src="/logo.png" alt="AIArtPalette Logo" fill className="object-contain" />
+                  </div>
+                  <span className="text-xl font-bold text-primary">AIArtPalette</span>
+                </Link>
+                <p className="text-muted-foreground leading-relaxed max-w-sm">{t("description")}</p>
+              </div>
             </div>
-          </div>
 
-          {/* Services */}
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h4 className="font-semibold text-foreground text-lg">{t("services.title")}</h4>
-              <ul className="space-y-3">
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <h4 className="font-semibold text-foreground text-lg">{t("services.title")}</h4>
+                <ul className="space-y-3">
+                  <li>
+                    <Link href={getLocalizedPath("/features")} className="text-muted-foreground hover:text-primary transition-colors duration-300 flex items-center group">
+                      <span className="w-1 h-1 bg-primary rounded-full mr-3 group-hover:w-2 transition-all duration-300" />
+                      {t("services.features")}
+                    </Link>
+                  </li>
                 <li>
-                  <button
-                    onClick={() => scrollToSection("features")}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300 flex items-center group"
-                  >
-                    <span className="w-1 h-1 bg-primary rounded-full mr-3 group-hover:w-2 transition-all duration-300" />
-                    {t("services.features")}
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => scrollToSection("pricing")}
+                  <Link
+                    href={getLocalizedPath("/pricing")}
                     className="text-muted-foreground hover:text-primary transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-1 h-1 bg-primary rounded-full mr-3 group-hover:w-2 transition-all duration-300" />
                     {t("services.pricing")}
-                  </button>
-                </li>
-                <li>
-                  <Link
-                    href={getLocalizedPath("/blog")}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300 flex items-center group"
-                  >
-                    <span className="w-1 h-1 bg-primary rounded-full mr-3 group-hover:w-2 transition-all duration-300" />
-                    {t("services.blog")}
                   </Link>
                 </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Newsletter Subscription */}
-          <div className="space-y-6">
-            <div className="space-y-4">
-              <h4 className="font-semibold text-foreground text-lg flex items-center">
-                <Mail className="w-5 h-5 mr-2 text-primary" />
-                {t("newsletter.title")}
-              </h4>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                {t("newsletter.description")}
-              </p>
-            </div>
-
-            {/* Newsletter Form */}
-            <form onSubmit={handleSubscribe} className="space-y-4">
-              <div className="relative">
-                <Input
-                  type="email"
-                  placeholder={t("newsletter.placeholder")}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-secondary/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20 pr-12"
-                  required
-                  disabled={isLoading}
-                />
-                <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              </div>
-
-              <Button
-                type="submit"
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground border-0 transition-all duration-300 transform hover:scale-105 cyber-glow"
-                disabled={isLoading || isSubscribed}
-              >
-                {isLoading ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    {locale === 'zh' ? '订阅中...' : 'Subscribing...'}
-                  </>
-                ) : isSubscribed ? (
-                  <>
-                    <span className="animate-pulse">{t("newsletter.success")}</span>
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-4 h-4 mr-2" />
-                    {t("newsletter.subscribe_button")}
-                  </>
-                )}
-              </Button>
-
-              {/* 消息显示 */}
-              {message && (
-                <div className={`text-sm text-center p-2 rounded ${
-                  isSubscribed 
-                    ? 'text-green-400 bg-green-400/10' 
-                    : 'text-red-400 bg-red-400/10'
-                }`}>
-                  {message}
-                </div>
-              )}
-            </form>
-
-            {/* Social Links */}
-            <div className="pt-4">
-              <div className="flex space-x-3">
+                </ul>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Bottom Bar */}
         <div className="border-t border-dark-600/50 mt-4 pt-4 flex flex-col md:flex-row justify-between items-center">

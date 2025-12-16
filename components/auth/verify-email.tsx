@@ -75,7 +75,7 @@ export function VerifyEmailPage() {
             {!status && (
               <Image
                 src="/logo.png"
-                alt="Get SaaS"
+                alt="AIArtPalette"
                 width={48}
                 height={48}
                 className="object-contain"

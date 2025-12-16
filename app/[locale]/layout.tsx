@@ -6,12 +6,18 @@ import type { Metadata } from 'next'
 
 const locales = ['en', 'zh']
 
-export async function generateMetadata({
-  params
-}: {
-  params: Promise<{ locale: string }>
-}): Promise<Metadata> {
-  const { locale } = await params
+export const dynamic = 'force-dynamic'
+
+export function generateStaticParams() {
+  return locales.map((l) => ({ locale: l }))
+}
+
+export async function generateMetadata(
+  props: {
+    params: Promise<{ locale: string }>
+  }
+): Promise<Metadata> {
+  const { locale } = await props.params
 
   // 验证locale是否有效
   if (!locales.includes(locale)) {
@@ -105,15 +111,14 @@ export async function generateMetadata({
   }
 }
 
-export default async function LocaleLayout({
-  children,
-  params
-}: {
-  children: React.ReactNode
-  params: Promise<{ locale: string }>
-}) {
-  // 在Next.js 15中，params需要被await
-  const { locale } = await params
+export default async function LocaleLayout(
+  props: {
+    children: React.ReactNode
+    params: Promise<{ locale: string }>
+  }
+) {
+  const { children } = props
+  const { locale } = await props.params
   
   // 验证locale是否有效
   if (!locales.includes(locale)) {

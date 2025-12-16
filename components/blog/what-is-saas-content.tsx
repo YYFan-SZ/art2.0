@@ -214,7 +214,7 @@ export function WhatIsSaasContent() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a
-                    href={`/${locale}/#pricing`}
+                    href={`/${locale}/pricing`}
                     className="inline-flex items-center px-6 py-3 bg-background text-primary font-semibold rounded-lg hover:bg-secondary transition-colors"
                   >
                     {isZh ? '立即开始' : 'Get Started'}

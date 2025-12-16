@@ -1,16 +1,4 @@
-import { loadStripe } from '@stripe/stripe-js'
-import Stripe from 'stripe'
-
-// 客户端Stripe实例
-export const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
-
-// 服务端Stripe实例 - 只在有密钥时初始化
-export const stripe = process.env.STRIPE_SECRET_KEY 
-  ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2025-07-30.basil',
-      typescript: true,
-    })
-  : null
+// 已移除 Stripe SDK 初始化，改为使用 Creem
 
 // 获取价格ID的函数 - 在服务端使用环境变量，在客户端使用预设值
 function getPriceId(envVar: string | undefined, fallback: string = ''): string {
@@ -24,14 +12,14 @@ function getPriceId(envVar: string | undefined, fallback: string = ''): string {
 
 // 订阅价格配置
 export const SUBSCRIPTION_PRICE_IDS = {
-  pro: getPriceId(process.env.STRIPE_PRO_PRICE_ID, ''),
+  pro: getPriceId(process.env.CREEM_SUBSCRIPTION_MONTHLY_PRICE_ID, ''),
 } as const
 
 // 积分购买价格配置
 export const POINTS_PRICE_IDS = {
-  starter: getPriceId(process.env.STRIPE_POINTS_STARTER_PRICE_ID, ''), // 5,000积分 - $5
-  popular: getPriceId(process.env.STRIPE_POINTS_POPULAR_PRICE_ID, ''), // 10,000积分 - $10
-  premium: getPriceId(process.env.STRIPE_POINTS_PREMIUM_PRICE_ID, ''), // 100,000积分 - $100
+  starter: getPriceId(process.env.STRIPE_POINTS_STARTER_PRICE_ID, ''),
+  popular: getPriceId(process.env.STRIPE_POINTS_POPULAR_PRICE_ID, ''),
+  premium: getPriceId(process.env.STRIPE_POINTS_PREMIUM_PRICE_ID, ''),
 } as const
 
 // 向后兼容的价格配置
@@ -53,22 +41,44 @@ export function getActualPriceIds() {
 // 订阅产品配置
 export const SUBSCRIPTION_PRODUCTS = {
   pro: {
-    name: 'Professional Plan',
+    name: 'Monthly Plan',
     priceId: SUBSCRIPTION_PRICE_IDS.pro,
-    price: 9.99,
+    price: 6.88,
     interval: 'month',
-    giftedPoints: 10000, // 订阅赠送的积分
+    giftedPoints: 300,
     features: [
-      'Full access to all agents',
-      '10,000 credits included',
-      'Agent personalization customization',
-      'API interface access',
-      'Dedicated customer support',
+      'Limited credits per period',
+      '300 credits included',
+      'Basic support',
+    ],
+  },
+  pro_3m: {
+    name: '3-Month Plan',
+    priceId: process.env.CREEM_SUBSCRIPTION_3M_PRICE_ID || '',
+    price: 15.88,
+    interval: '3months',
+    giftedPoints: 1000,
+    features: [
+      'Limited credits per period',
+      '1,000 credits included',
+      'Priority support',
+    ],
+  },
+  pro_6m: {
+    name: '6-Month Plan',
+    priceId: process.env.CREEM_SUBSCRIPTION_6M_PRICE_ID || '',
+    price: 29.88,
+    interval: '6months',
+    giftedPoints: 3000,
+    features: [
+      'Limited credits per period',
+      '3,000 credits included',
+      'Priority support',
     ],
   },
   enterprise: {
     name: 'Enterprise Plan',
-    priceId: null, // 企业版不使用Stripe支付
+    priceId: null,
     price: 'Contact Sales',
     interval: 'custom',
     giftedPoints: 0,
@@ -84,30 +94,22 @@ export const SUBSCRIPTION_PRODUCTS = {
 
 // 积分购买产品配置
 export const POINTS_PRODUCTS = {
-  starter: {
-    id: 'starter',
-    name: '入门套餐',
-    points: 5000,
-    price: 8,
-    priceId: POINTS_PRICE_IDS.starter,
-    description: '适合新用户试用',
+  small: {
+    id: 'small',
+    name: '积分套餐',
+    points: 100,
+    price: 3.88,
+    priceId: process.env.CREEM_POINTS_100_PRICE_ID || '',
+    description: '100 积分',
   },
-  popular: {
-    id: 'popular',
-    name: '热门套餐',
-    points: 10000,
-    price: 15,
-    priceId: POINTS_PRICE_IDS.popular,
-    description: '最受欢迎的选择',
+  medium: {
+    id: 'medium',
+    name: '积分套餐',
+    points: 350,
+    price: 9.88,
+    priceId: process.env.CREEM_POINTS_350_PRICE_ID || '',
+    description: '350 积分',
     popular: true,
-  },
-  premium: {
-    id: 'premium',
-    name: '高级套餐',
-    points: 100000,
-    price: 150,
-    priceId: POINTS_PRICE_IDS.premium,
-    description: '适合重度用户',
   },
 } as const
 

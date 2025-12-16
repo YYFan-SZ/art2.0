@@ -5,7 +5,6 @@ import { users, accounts, sessions, verificationTokens } from '@/lib/schema'
 import { eq } from 'drizzle-orm'
 import { nanoid } from 'nanoid'
 import { giveRegisterBonus } from '@/lib/points'
-import GitHubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcryptjs'
@@ -103,13 +102,12 @@ export const authOptions: NextAuthOptions = {
     }
   },
   providers: [
-    GitHubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
-    }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      httpOptions: {
+        timeout: 15000,
+      },
     }),
     CredentialsProvider({
       name: 'credentials',
@@ -207,6 +205,6 @@ export const authOptions: NextAuthOptions = {
     signIn: '/auth/signin',
     error: '/auth/error',
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET || (process.env.NODE_ENV === 'development' ? 'secret-for-dev-only' : undefined),
   debug: process.env.NODE_ENV === 'development',
 } 

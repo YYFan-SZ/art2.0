@@ -1,23 +1,23 @@
 {
   "metadata": {
-    "title": "Get SaaS - Modern SaaS Template Designed for Global Markets",
-    "description": "Get SaaS is a modern SaaS template designed for global markets, featuring complete user authentication, payment systems, multi-language support, and SEO optimization. Built with Next.js to help developers launch SaaS products quickly.",
+    "title": "AIArtPalette - Modern SaaS Template Designed for Global Markets",
+    "description": "AIArtPalette is a modern SaaS template designed for global markets, featuring complete user authentication, payment systems, multi-language support, and SEO optimization. Built with Next.js to help developers launch SaaS products quickly.",
     "terms": {
-      "title": "Terms of Service - Get SaaS",
+    "title": "Terms of Service - AIArtPalette",
       "description": "View Get SaaS's Terms of Service for template usage, understanding usage rules, license agreement and user rights and responsibilities."
     },
     "privacy": {
-      "title": "Privacy Policy - Get SaaS",
+    "title": "Privacy Policy - AIArtPalette",
       "description": "Learn how Get SaaS handles user data and privacy protection to ensure your personal information security."
     },
     "cookies": {
-      "title": "Cookie Policy - Get SaaS",
+    "title": "Cookie Policy - AIArtPalette",
       "description": "Learn how Get SaaS uses cookies and related technologies to optimize user experience and website performance."
     }
   },
   "demoBanner": {
     "prefix": "This is a",
-    "productName": "Get SaaS",
+    "productName": "AIArtPalette",
     "suffix": "demo site. After exploring all features,",
     "cta": "Purchase Full Version"
   },
@@ -34,7 +34,7 @@
   },
   "hero": {
     "title": "Modern SaaS Template for Global Markets\nLaunch Your SaaS Product Worldwide",
-    "description": "Get SaaS features complete user authentication, payment systems, multi-language support, and SEO optimization. Built with Next.js and modern tech stack, focus on your business logic and launch globally fast.",
+    "description": "AIArtPalette features complete user authentication, payment systems, multi-language support, and SEO optimization. Built with Next.js and modern tech stack, focus on your business logic and launch globally fast.",
     "badge": "🚀 Modern SaaS Solution",
     "features": {
       "readyToUse": "Ready to Use",
@@ -72,6 +72,22 @@
     "podcastAgent": {
       "title": "Payment System Integration",
       "description": "Built-in Stripe payment system, supports subscription billing, one-time payments, invoice management, and enterprise-grade security features."
+    },
+    "i18nSupport": {
+      "title": "Internationalization",
+      "description": "Support Chinese and English with localized URLs and metadata, SEO friendly, easily extendable to more languages."
+    },
+    "seoOptimization": {
+      "title": "SEO Optimization",
+      "description": "Built-in sitemap, Open Graph, structured data, and multi-language SEO to improve search visibility."
+    },
+    "dashboard": {
+      "title": "User Dashboard",
+      "description": "Subscription management, points system, and profile settings to deliver a complete user center experience."
+    },
+    "security": {
+      "title": "Security & Compliance",
+      "description": "CSRF protection, input validation, session security, and data encryption following security best practices."
     }
   },
   "pricing": {
@@ -212,7 +228,7 @@
     "title": "Email Verification",
     "description": "Verify your email address to complete account registration",
     "meta_title": "Email Verification",
-    "meta_description": "Verify your Get SaaS account email to complete account activation",
+    "meta_description": "Verify your AIArtPalette account email to complete account activation",
     "verifying": "Verifying your email...",
     "success": "Email verification successful!",
     "failed": "Email verification failed",
@@ -225,11 +241,11 @@
     "back_to_login": "Back to Login"
   },
   "auth": {
-    "meta_title": "Authentication - Get SaaS",
+    "meta_title": "Authentication - AIArtPalette",
     "signin_title": "Sign In",
-    "signin_description": "Sign in to your Get SaaS account to start using modern SaaS templates",
+    "signin_description": "Sign in to your AIArtPalette account to start using modern SaaS templates",
     "signup_title": "Sign Up",
-    "signup_description": "Create your Get SaaS account and start your SaaS development journey",
+    "signup_description": "Create your AIArtPalette account and start your SaaS development journey",
     "error_title": "Authentication Error",
     "error_description": "An error occurred during authentication, please try again or contact technical support",
     "error_page_title": "Sign In Failed",
@@ -303,7 +319,7 @@
     "title": "Forgot Password",
     "description": "Enter your email address and we'll send you a link to reset your password",
     "meta_title": "Forgot Password",
-    "meta_description": "Recover your Get SaaS account password by resetting it via email",
+    "meta_description": "Recover your AIArtPalette account password by resetting it via email",
     "email_label": "Email Address",
     "email_placeholder": "Enter your email address",
     "send_reset_link": "Send Reset Link",
@@ -321,7 +337,7 @@
     "title": "Reset Password",
     "description": "Enter your new password",
     "meta_title": "Reset Password",
-    "meta_description": "Reset your Get SaaS account password and set a new secure password",
+    "meta_description": "Reset your AIArtPalette account password and set a new secure password",
     "password_label": "New Password",
     "password_placeholder": "Enter your new password",
     "confirm_password_label": "Confirm Password",
@@ -634,15 +650,15 @@
   },
   "testimonials": {
     "title": "User Reviews",
-    "description": "Join thousands of developers and entrepreneurs already using Get SaaS to rapidly build and deploy SaaS products"
+    "description": "Join thousands of developers and entrepreneurs already using AIArtPalette to rapidly build and deploy SaaS products"
   },
   "blogPage": {
-    "title": "Get SaaS Blog",
+    "title": "AIArtPalette Blog",
     "subtitle": "Explore the latest SaaS development trends and insights",
     "contactPost": {
       "badge": "Latest",
       "date": "December 2024",
-      "author": "Get SaaS Team",
+      "author": "AIArtPalette Team",
       "title": "Contact Us - Let's Explore the Infinite Possibilities of SaaS Together",
       "description": "We're excited to connect with you! Whether you want to learn about our SaaS template services or have any technical questions, we're always ready to help.",
       "contactMethods": {
@@ -699,6 +715,50 @@
         "excerpt": "Understand the definition, business model, and technical architecture of SaaS, and how to rapidly build modern SaaS products."
       },
       "readMore": "Read More"
+    }
+  }
+  ,
+  "pricingExplain": {
+    "title": "Pricing & Packages",
+    "description": "Choose a subscription or points package. Payment is automatic and instant.",
+    "sections": {
+      "subscriptionsTitle": "Subscription Plans",
+      "pointsTitle": "Points Top-up"
+    },
+    "subscriptions": {
+      "giftedPointsPerCycle": "Includes {points} points per cycle"
+    },
+    "points": {
+      "description": "Purchase points, never expire",
+      "packageName": "Points Package",
+      "itemDescription": "{count} points"
+    },
+    "buttons": {
+      "subscribeNow": "Subscribe Now",
+      "buyNow": "Buy Now",
+      "backHome": "Back to Home"
+    },
+    "planNames": {
+      "pro": "Monthly Plan",
+      "pro_3m": "3-Month Plan",
+      "pro_6m": "6-Month Plan"
+    },
+    "features": {
+      "pro": {
+        "item1": "Limited credits per period",
+        "item2": "{count} credits included",
+        "item3": "Basic support"
+      },
+      "pro_3m": {
+        "item1": "Limited credits per period",
+        "item2": "{count} credits included",
+        "item3": "Priority support"
+      },
+      "pro_6m": {
+        "item1": "Limited credits per period",
+        "item2": "{count} credits included",
+        "item3": "Priority support"
+      }
     }
   }
 }

@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { stripe, getActualPriceIds } from '@/lib/stripe'
+import { getActualPriceIds } from '@/lib/stripe'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
   try {
-    // 检查Stripe是否已配置
-    if (!stripe) {
-      return NextResponse.json({ error: 'Stripe not configured' }, { status: 500 })
+    if (!process.env.CREEM_API_KEY) {
+      return NextResponse.json({ error: 'Creem not configured' }, { status: 500 })
     }
 
     const session = await getServerSession(authOptions)
@@ -22,7 +21,7 @@ export async function POST(request: NextRequest) {
     const actualPriceIds = getActualPriceIds()
 
     // 添加调试日志
-    console.log('=== Stripe Checkout Debug ===')
+    console.log('=== Creem Checkout Debug ===')
     console.log('收到的价格ID:', priceId)
     console.log('计划类型:', planType)
     console.log('语言:', locale)
@@ -56,52 +55,49 @@ export async function POST(request: NextRequest) {
 
     console.log('使用的最终价格ID:', finalPriceId)
 
-    // 创建或获取客户
-    let customer
-    const existingCustomers = await stripe.customers.list({
-      email: session.user.email,
-      limit: 1,
-    })
-
-    if (existingCustomers.data.length > 0) {
-      customer = existingCustomers.data[0]
-    } else {
-      customer = await stripe.customers.create({
-        email: session.user.email,
-        name: session.user.name || undefined,
-      })
-    }
-
     // 验证locale并构建成功URL
     const validLocales = ['en', 'zh']
     const validLocale = validLocales.includes(locale) ? locale : 'en'
-    
-    // 创建结账会话
-    const checkoutSession = await stripe.checkout.sessions.create({
-      customer: customer.id,
-      payment_method_types: ['card'],
-      line_items: [
-        {
-          price: finalPriceId,
-          quantity: 1,
-        },
-      ],
-      mode: 'subscription',
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/${validLocale}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/${validLocale}/#pricing`,
-      metadata: {
-        userId: session.user.id || '',
-        planType,
-        locale: validLocale,
+    const successUrl = `${process.env.NEXT_PUBLIC_APP_URL}/${validLocale}/dashboard`
+    const cancelUrl = `${process.env.NEXT_PUBLIC_APP_URL}/${validLocale}/#pricing`
+
+    const creemResponse = await fetch('https://api.creem.io/v1/checkouts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.CREEM_API_KEY!,
       },
+      body: JSON.stringify({
+        product_id: finalPriceId,
+        units: 1,
+        customer: {
+          email: session.user.email,
+        },
+        success_url: successUrl,
+        metadata: {
+          userId: session.user.id || '',
+          planType,
+          locale: validLocale,
+        },
+      }),
     })
 
-    return NextResponse.json({ sessionId: checkoutSession.id })
+    if (!creemResponse.ok) {
+      const errText = await creemResponse.text()
+      console.error('Creem checkout error:', errText)
+      return NextResponse.json(
+        { error: 'Failed to create Creem checkout' },
+        { status: 500 }
+      )
+    }
+
+    const checkout = await creemResponse.json()
+    return NextResponse.json({ url: checkout.checkout_url })
   } catch (error) {
-    console.error('Stripe checkout error:', error)
+    console.error('Creem checkout error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
     )
   }
-} 
+}

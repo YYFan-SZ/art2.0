@@ -18,13 +18,13 @@ export function SaasFeaturesContent() {
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               <span className="text-primary">
-                {isZh ? 'Get SaaS有什么功能？' : 'What Features Does Get SaaS Have?'}
+                {isZh ? 'AIArtPalette有什么功能？' : 'What Features Does AIArtPalette Have?'}
               </span>
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
               {isZh
-                ? '深入了解Get SaaS模版提供的核心功能：用户认证、支付系统、多语言支持、SEO优化等完整解决方案'
-                : 'Explore the core features provided by Get SaaS template: user authentication, payment systems, multi-language support, SEO optimization and more'
+                ? '深入了解AIArtPalette模版提供的核心功能：用户认证、支付系统、多语言支持、SEO优化等完整解决方案'
+                : 'Explore the core features provided by AIArtPalette template: user authentication, payment systems, multi-language support, SEO optimization and more'
               }
             </p>
           </div>
@@ -42,8 +42,8 @@ export function SaasFeaturesContent() {
 
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                 {isZh
-                  ? 'Get SaaS内置了企业级的用户认证系统，支持多种登录方式和安全特性，为您的SaaS产品提供可靠的用户管理基础。'
-                  : 'Get SaaS features a robust, enterprise-grade user authentication system that seamlessly integrates multiple login methods and advanced security features. This comprehensive authentication infrastructure provides a rock-solid foundation for user management, ensuring both security and user experience excellence in your SaaS application.'
+                  ? 'AIArtPalette内置了企业级的用户认证系统，支持多种登录方式和安全特性，为您的SaaS产品提供可靠的用户管理基础。'
+                  : 'AIArtPalette features a robust, enterprise-grade authentication system that integrates multiple login methods and advanced security features, providing a solid foundation for user management with excellent security and UX.'
                 }
               </p>
 
@@ -147,7 +147,7 @@ export function SaasFeaturesContent() {
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                 {isZh
                   ? '基于next-intl构建的完整国际化解决方案，让您的SaaS产品轻松进入全球市场。'
-                  : 'Built on the powerful next-intl framework, Get SaaS delivers a comprehensive internationalization solution that enables your SaaS product to seamlessly expand into global markets. This sophisticated i18n implementation handles everything from dynamic content translation to locale-specific formatting, ensuring your application feels native to users worldwide.'
+                  : 'Built on the powerful next-intl framework, AIArtPalette delivers a comprehensive internationalization solution that enables your SaaS product to seamlessly expand into global markets.'
                 }
               </p>
 
@@ -307,7 +307,7 @@ export function SaasFeaturesContent() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a
-                    href={`/${locale}/#pricing`}
+                    href={`/${locale}/pricing`}
                     className="inline-flex items-center px-6 py-3 bg-background text-primary font-semibold rounded-lg hover:bg-secondary transition-colors"
                   >
                     {isZh ? '立即开始' : 'Get Started'}

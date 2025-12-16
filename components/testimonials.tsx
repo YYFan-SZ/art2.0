@@ -21,7 +21,7 @@ const testimonials: Testimonial[] = [
     id: 1,
     name: "Alex Johnson",
     title: "创业公司CEO",
-    content: "Get SaaS 帮我们在2周内就上线了MVP！完整的用户认证和支付系统让我们专注于核心业务逻辑，节省了至少3个月的开发时间。",
+    content: "AIArtPalette 帮我们在2周内就上线了MVP！完整的用户认证和支付系统让我们专注于核心业务逻辑，节省了至少3个月的开发时间。",
     rating: 5,
     avatar: "/avatars/alex.jpg"
   },
@@ -37,7 +37,7 @@ const testimonials: Testimonial[] = [
     id: 3,
     name: "李明",
     title: "技术总监",
-    content: "作为技术总监，我对Get SaaS的代码质量印象深刻。TypeScript + Next.js的架构非常现代化，团队很快就能上手开发。",
+    content: "作为技术总监，我对AIArtPalette的代码质量印象深刻。TypeScript + Next.js的架构非常现代化，团队很快就能上手开发。",
     rating: 5,
     avatar: "/avatars/liming.jpg"
   },
@@ -53,7 +53,7 @@ const testimonials: Testimonial[] = [
     id: 5,
     name: "王小雨",
     title: "独立开发者",
-    content: "Get SaaS的多语言支持让我的产品轻松进入国际市场。SEO优化也做得很到位，搜索引擎排名提升明显。",
+    content: "AIArtPalette的多语言支持让我的产品轻松进入国际市场。SEO优化也做得很到位，搜索引擎排名提升明显。",
     rating: 5,
     avatar: "/avatars/wangxiaoyu.jpg"
   },
@@ -140,7 +140,7 @@ export function Testimonials() {
               variant="outline"
               size="icon"
               onClick={prevTestimonial}
-              className="rounded-full w-12 h-12 border-cyber-500/50 bg-secondary/50 hover:bg-secondary text-primary backdrop-blur-sm transition-all duration-300 cyber-glow-subtle"
+              className="rounded-full w-12 h-12 border-cyber-500/50 bg-secondary/50 hover:bg-secondary text-primary backdrop-blur-sm transition-all duration-300"
             >
               <ChevronLeft className="w-5 h-5" />
             </Button>
@@ -153,7 +153,7 @@ export function Testimonials() {
                   onClick={() => goToTestimonial(index)}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === currentIndex
-                      ? 'bg-primary scale-125 cyber-glow'
+                      ? 'bg-primary scale-125'
                       : 'bg-secondary hover:bg-primary/50'
                   }`}
                 />
@@ -164,7 +164,7 @@ export function Testimonials() {
               variant="outline"
               size="icon"
               onClick={nextTestimonial}
-              className="rounded-full w-12 h-12 border-cyber-500/50 bg-secondary/50 hover:bg-secondary text-primary backdrop-blur-sm transition-all duration-300 cyber-glow-subtle"
+              className="rounded-full w-12 h-12 border-cyber-500/50 bg-secondary/50 hover:bg-secondary text-primary backdrop-blur-sm transition-all duration-300"
             >
               <ChevronRight className="w-5 h-5" />
             </Button>
